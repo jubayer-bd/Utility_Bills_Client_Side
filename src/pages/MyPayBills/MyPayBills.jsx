@@ -66,7 +66,7 @@ const MyPayBills = () => {
       date: form.date.value,
     };
 
-    fetch(`https://your-server-url.vercel.app/myBills/${currentBill._id}`, {
+    fetch(`http://localhost:3000/my-bills/${currentBill._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedBill),
@@ -180,8 +180,8 @@ const MyPayBills = () => {
 
       {/* Update Modal */}
       {showUpdateModal && currentBill && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl w-96 relative">
+        <div className="fixed inset-0  flex items-center justify-center z-50">
+          <div className="bg-white shadow-lg p-6 rounded-2xl w-96 relative">
             <button
               className="absolute top-3 right-3 text-gray-500"
               onClick={() => setShowUpdateModal(false)}
