@@ -14,7 +14,7 @@ const MyPayBills = () => {
   // Fetch bills for logged-in user
   const fetchMyBills = () => {
     setLoading(true);
-    fetch(`https://your-server-url.vercel.app/myBills?email=${user?.email}`)
+    fetch(`http://localhost:3000/my-bills?email=${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setMyBills(data);
