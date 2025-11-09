@@ -26,11 +26,14 @@ const AddBill = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:3000/bills", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newBill),
-      });
+      const res = await fetch(
+        "https://utility-bills-server-side.vercel.app/bills",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newBill),
+        }
+      );
 
       const data = await res.json();
 

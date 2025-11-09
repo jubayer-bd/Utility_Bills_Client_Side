@@ -70,6 +70,16 @@ const Navbar = () => {
               My Pay Bills
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/my-profile"
+              className={({ isActive }) =>
+                isActive ? "text-primary font-semibold" : "font-medium"
+              }
+            >
+              My Profile
+            </NavLink>
+          </li>
         </>
       )}
       <li>

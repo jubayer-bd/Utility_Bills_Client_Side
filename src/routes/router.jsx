@@ -10,6 +10,7 @@ import PrivateRoute from "./PrivateRoutes";
 import MyPayBills from "../pages/MyPayBills/MyPayBills";
 import AddBills from "../pages/Bills/AddBills";
 import About from "../pages/About/About";
+import Profile from "../pages/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,15 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "my-profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
+
       {
         path: "about",
 

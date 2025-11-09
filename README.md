@@ -1,16 +1,106 @@
-# React + Vite
+# 🧾 Utility Bill Management System (MERN)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A complete full-stack web application built with the **MERN Stack (MongoDB, Express, React, Node.js)** that allows users to **manage, pay, and track their utility bills** easily from one place.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌐 Live Site
 
-## React Compiler
+🔗 [Visit Live Site](https://your-live-site-url.netlify.app)  
+_(Replace this link with your actual deployed URL)_
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## ⚙️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Frontend:**
+
+- React
+- React Router
+- TailwindCSS + DaisyUI
+- SweetAlert2
+- jsPDF + jsPDF-AutoTable
+
+**Backend:**
+
+- Node.js
+- Express.js
+- MongoDB
+- Hosted on Vercel
+
+**Authentication:**
+
+- Firebase Authentication (Email/Password + Google Login)
+
+**Hosting:**
+
+- Client: Netlify / Firebase
+- Server: Vercel
+
+---
+
+## ✨ Features
+
+- 🔐 **User Authentication System**  
+  Secure login, registration, and Google social authentication using Firebase.
+
+- 🧾 **Bill Management Dashboard**  
+  Add, view, and manage all utility bills (Electricity, Gas, Water, Internet) with CRUD operations.
+
+- 💳 **Online Bill Payment**  
+  Users can pay their current month’s bills directly from the details page with a confirmation form.
+
+- 📄 **PDF Report Generation**  
+  Generate and download a personalized payment report with total count and total amount using jsPDF.
+
+- 🎨 **Responsive Modern UI**  
+  Fully responsive layout with Navbar, Footer, Category cards, Carousel, and extra informative sections.
+
+- 🧑‍💼 **User Profile Management**  
+  View and update your name and photo instantly from the Profile page without a modal.
+
+- ⚡ **Category Filtering and Details**  
+  Filter bills by category and view complete information with an option to pay.
+
+---
+
+## 📂 Pages Overview
+
+| Page                 | Description                                                                  |
+| -------------------- | ---------------------------------------------------------------------------- |
+| **Home**             | Carousel, category cards, recent bills, and extra informative sections.      |
+| **Bills**            | Displays all bills with filtering by category and "See Details" navigation.  |
+| **Bill Details**     | Full information with payment form (available only for current month).       |
+| **My Pay Bills**     | Displays logged-in user’s bills with Update/Delete options and PDF download. |
+| **About**            | Information about the platform and its purpose.                              |
+| **Profile**          | Shows and allows updating of user's display name and profile photo.          |
+| **Login / Register** | Authentication pages with Firebase and Google login.                         |
+| **404 Page**         | Custom not-found route handling.                                             |
+
+---
+
+## 🧾 MongoDB Collections
+
+### bills
+
+```json
+{
+  "title": "Frequent Power Outage in Mirpur",
+  "category": "Electricity",
+  "amount": 1500,
+  "location": "Mirpur-10, Dhaka",
+  "description": "Power cuts occur daily in the evening.",
+  "image": "https://example.com/power.jpg",
+  "date": "2025-11-01"
+}
+```
+
+{
+  "email": "user@gmail.com",
+  "billId": "674e5f...",
+  "username": "Jubayer",
+  "address": "Mirpur, Dhaka",
+  "phone": "017XXXXXXXX",
+  "amount": 1200,
+  "date": "2025-11-08"
+}
