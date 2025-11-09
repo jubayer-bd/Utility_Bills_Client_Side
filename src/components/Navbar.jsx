@@ -8,7 +8,7 @@ import {
   MdOutlineLogout,
 } from "react-icons/md";
 import { LuTickets } from "react-icons/lu";
-import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { HiOutlineLogin, HiOutlineMenuAlt3 } from "react-icons/hi";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -94,7 +94,7 @@ const Navbar = () => {
             to="/"
             className="flex items-center gap-2 text-2xl font-bold text-primary"
           >
-            <LuTickets /> 
+            <LuTickets />
             <span>
               Utility<span className="text-secondary">Bill</span>
             </span>
@@ -102,12 +102,12 @@ const Navbar = () => {
         </div>
 
         {/* Center Section */}
-        <div className="navbar-end hidden lg:flex">
+        <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-2">{navLinks}</ul>
-          {/* </div> */}
+        </div>
 
-          {/* Right Section */}
-          {/* <div className="navbar-end flex items-center gap-3"> */}
+        {/* Right Section */}
+        <div className="navbar-end flex items-center gap-3">
           {/* ✅ Theme Toggle */}
           <button
             onClick={toggleTheme}
@@ -139,13 +139,22 @@ const Navbar = () => {
               </button>
             </div>
           ) : (
-            <Link
-              to="/login"
-              className="btn btn-sm bg-primary text-white hover:bg-primary/90 flex items-center gap-1"
-            >
-              <MdOutlineLogin />
-              <span className="hidden sm:inline">Login</span>
-            </Link>
+            <div className="flex gap-3">
+              <Link
+                to="/login"
+                className="btn btn-sm bg-white border-primary text-primary hover:bg-primary/10 flex items-center gap-1"
+              >
+                <MdOutlineLogin />
+                <span className="hidden sm:inline">Login</span>
+              </Link>
+              <Link
+                to="/register"
+                className="btn btn-sm bg-primary text-white hover:bg-primary/90 flex items-center gap-1"
+              >
+                <HiOutlineLogin />
+                <span className="hidden sm:inline">Register</span>
+              </Link>
+            </div>
           )}
 
           {/* Mobile Menu */}
@@ -155,7 +164,7 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow bg-base-100 rounded-box w-52"
             >
               {navLinks}
             </ul>

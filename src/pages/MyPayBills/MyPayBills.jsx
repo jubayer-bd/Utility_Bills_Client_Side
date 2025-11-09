@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable"; // Correct import for ES modules
+import autoTable from "jspdf-autotable";
 import { AuthContext } from "../../provider/AuthProvider";
 
 const MyPayBills = () => {
@@ -10,10 +10,12 @@ const MyPayBills = () => {
   const [loading, setLoading] = useState(true);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [currentBill, setCurrentBill] = useState(null);
+
   useEffect(() => {
     document.title = "My Pay Bills | Utility Bills";
-  });
-  // Fetch bills for logged-in user
+  }, []);
+
+  // Fetch user's bills
   const fetchMyBills = () => {
     setLoading(true);
     fetch(
@@ -33,7 +35,10 @@ const MyPayBills = () => {
 
   // Calculate totals
   const totalCount = myBills.length;
-  const totalAmount = myBills.reduce((sum, b) => sum + Number(b.amount), 0);
+  const totalAmount = myBills.reduce(
+    (sum, b) => sum + Number(b.amount || 0),
+    0
+  );
 
   // Delete bill
   const handleDelete = (billId) => {
@@ -86,53 +91,61 @@ const MyPayBills = () => {
       .catch(() => Swal.fire("Error!", "Failed to update bill.", "error"));
   };
 
-  // Download PDF
+  // ✅ Fixed PDF download
   const downloadPDF = () => {
     if (!myBills.length)
       return Swal.fire("No Data", "No bills to download.", "info");
 
-    const doc = new jsPDF();
+    const doc = new jsPDF({
+      orientation: "portrait",
+      unit: "pt",
+      format: "A4",
+    });
 
-    // Title
+    doc.setFont("helvetica", "normal");
+
+    // Header
     doc.setFontSize(18);
-    doc.text("My Pay Bills Report", 14, 20);
+    doc.text("My Pay Bills Report", 40, 50);
 
-    // Totals at top
+    // Totals
     doc.setFontSize(12);
-    doc.text(`Total Bills Paid: ${totalCount}`, 14, 28);
-    doc.text(`Total Amount: ৳${totalAmount}`, 14, 34);
+    doc.text(`Total Bills Paid: ${totalCount}`, 40, 70);
+    doc.text(`Total Amount: BDT ${totalAmount}`, 40, 90);
 
-    // Table headers and body
+    // Table
     const tableColumn = [
       "Username",
       "Email",
-      "Amount",
+      "Amount (BDT)",
       "Address",
       "Phone",
       "Date",
     ];
+
     const tableRows = myBills.map((bill) => [
-      bill.username,
-      bill.email,
-      bill.amount,
-      bill.address,
-      bill.phone,
+      bill.username || "-",
+      bill.email || "-",
+      bill.amount || "0",
+      bill.address || "-",
+      bill.phone || "-",
       new Date(bill.date).toLocaleDateString(),
     ]);
 
-    // Totals row at the bottom
-    tableRows.push(["Total", "", totalAmount, "", "", ""]);
+    tableRows.push(["", "", `Total: ${totalAmount}`, "", "", ""]);
 
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
-      startY: 40,
-      styles: { halign: "center" },
+      startY: 110,
+      theme: "grid",
+      styles: { fontSize: 10, cellPadding: 5, halign: "center" },
       headStyles: { fillColor: [41, 128, 185], textColor: 255 },
+      bodyStyles: { textColor: [40, 40, 40] },
       didParseCell: (data) => {
         if (data.row.index === tableRows.length - 1) {
-          data.cell.styles.fillColor = [230, 230, 230];
           data.cell.styles.fontStyle = "bold";
+          data.cell.styles.fillColor = [240, 240, 240];
         }
       },
     });
@@ -146,10 +159,11 @@ const MyPayBills = () => {
     <div className="container mx-auto px-4 py-12">
       <h2 className="text-3xl font-bold mb-4">My Pay Bills</h2>
 
+      {/* Header Bar */}
       <div className="mb-6 flex justify-between items-center">
         <p>
           Total Bills Paid: <strong>{totalCount}</strong> | Total Amount:{" "}
-          <strong>৳{totalAmount}</strong>
+          <strong>BDT {totalAmount}</strong>
         </p>
         <button
           onClick={downloadPDF}
@@ -159,13 +173,14 @@ const MyPayBills = () => {
         </button>
       </div>
 
+      {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full border rounded-lg">
           <thead className="bg-gray-100">
             <tr>
               <th className="py-2 px-4 border">Username</th>
               <th className="py-2 px-4 border">Email</th>
-              <th className="py-2 px-4 border">Amount</th>
+              <th className="py-2 px-4 border">Amount (BDT)</th>
               <th className="py-2 px-4 border">Address</th>
               <th className="py-2 px-4 border">Phone</th>
               <th className="py-2 px-4 border">Date</th>
@@ -177,7 +192,7 @@ const MyPayBills = () => {
               <tr key={bill._id} className="text-center">
                 <td className="py-2 px-4 border">{bill.username}</td>
                 <td className="py-2 px-4 border">{bill.email}</td>
-                <td className="py-2 px-4 border">৳{bill.amount}</td>
+                <td className="py-2 px-4 border">BDT {bill.amount}</td>
                 <td className="py-2 px-4 border">{bill.address}</td>
                 <td className="py-2 px-4 border">{bill.phone}</td>
                 <td className="py-2 px-4 border">
@@ -208,7 +223,7 @@ const MyPayBills = () => {
 
       {/* Update Modal */}
       {showUpdateModal && currentBill && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/30">
           <div className="bg-white shadow-lg p-6 rounded-2xl w-96 relative">
             <button
               className="absolute top-3 right-3 text-gray-500"

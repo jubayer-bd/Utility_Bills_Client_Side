@@ -9,6 +9,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
+import Swal from "sweetalert2";
 // import app from "../Firebase/firebase.config";
 
 export const AuthContext = createContext();
@@ -38,6 +39,24 @@ const AuthProvider = ({ children }) => {
   };
 
   const logOut = async () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, LogOut !",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
     setLoading(true);
     await signOut(auth);
     return setUser(null);
