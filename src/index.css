@@ -1,0 +1,42 @@
+/* ✅ Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+/* ✅ Tailwind + DaisyUI */
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  /* themes: light --default; */
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  /* ⚡ Utility Bill Management System Custom Theme */
+  --color-primary: #3B82F6; /* Bright Utility Blue (Electricity / Internet) */
+  --color-secondary: #10b981; /* Green Energy (Gas / Water) */
+  --color-accent: #f59e0b; /* Accent Gold for Highlights */
+  --color-neutral: #f5f5f5; /* Neutral light gray background */
+  --color-base-100: #ffffff; /* White card backgrounds */
+  --color-info: #38bdf8; /* Soft sky blue for info */
+  --color-success: #22c55e; /* Fresh green success */
+  --color-warning: #facc15; /* Yellow alert */
+  --color-error: #ef4444; /* Red error */
+}
+
+/* ✅ Typography */
+body {
+  font-family: "Inter", sans-serif;
+  /* background-color: var(--color-neutral);
+  color: #1e293b;  */
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+  color: var(--color-primary);
+}
