@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import jsPDF from "jspdf";
-import "jspdf-autotable";
+import autoTable from "jspdf-autotable"; // Correct import for ES modules
 import { AuthContext } from "../../provider/AuthProvider";
 
 const MyPayBills = () => {
@@ -41,16 +41,12 @@ const MyPayBills = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://your-server-url.vercel.app/myBills/${billId}`, {
-          method: "DELETE",
-        })
+        fetch(`http://localhost:3000/my-bills/${billId}`, { method: "DELETE" })
           .then(() => {
             Swal.fire("Deleted!", "Bill has been deleted.", "success");
             fetchMyBills();
           })
-          .catch(() => {
-            Swal.fire("Error!", "Failed to delete bill.", "error");
-          });
+          .catch(() => Swal.fire("Error!", "Failed to delete bill.", "error"));
       }
     });
   };
@@ -77,38 +73,52 @@ const MyPayBills = () => {
         setShowUpdateModal(false);
         fetchMyBills();
       })
-      .catch(() => {
-        Swal.fire("Error!", "Failed to update bill.", "error");
-      });
+      .catch(() => Swal.fire("Error!", "Failed to update bill.", "error"));
   };
 
   // Download PDF
   const downloadPDF = () => {
-    const doc = new jsPDF();
-    doc.text("My Pay Bills Report", 14, 20);
-    const tableColumn = [
-      "Username",
-      "Email",
-      "Amount",
-      "Address",
-      "Phone",
-      "Date",
-    ];
-    const tableRows = [];
+    if (!myBills.length) return Swal.fire("No Data", "No bills to download.", "info");
 
-    myBills.forEach((bill) => {
-      const row = [
-        bill.username,
-        bill.email,
-        bill.amount,
-        bill.address,
-        bill.phone,
-        new Date(bill.date).toLocaleDateString(),
-      ];
-      tableRows.push(row);
+    const doc = new jsPDF();
+
+    // Title
+    doc.setFontSize(18);
+    doc.text("My Pay Bills Report", 14, 20);
+
+    // Totals at top
+    doc.setFontSize(12);
+    doc.text(`Total Bills Paid: ${totalCount}`, 14, 28);
+    doc.text(`Total Amount: ৳${totalAmount}`, 14, 34);
+
+    // Table headers and body
+    const tableColumn = ["Username", "Email", "Amount", "Address", "Phone", "Date"];
+    const tableRows = myBills.map((bill) => [
+      bill.username,
+      bill.email,
+      bill.amount,
+      bill.address,
+      bill.phone,
+      new Date(bill.date).toLocaleDateString(),
+    ]);
+
+    // Totals row at the bottom
+    tableRows.push(["Total", "", totalAmount, "", "", ""]);
+
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+      startY: 40,
+      styles: { halign: "center" },
+      headStyles: { fillColor: [41, 128, 185], textColor: 255 },
+      didParseCell: (data) => {
+        if (data.row.index === tableRows.length - 1) {
+          data.cell.styles.fillColor = [230, 230, 230];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
     });
 
-    doc.autoTable(tableColumn, tableRows, { startY: 30 });
     doc.save("my_bills_report.pdf");
   };
 
@@ -180,7 +190,7 @@ const MyPayBills = () => {
 
       {/* Update Modal */}
       {showUpdateModal && currentBill && (
-        <div className="fixed inset-0  flex items-center justify-center z-50">
+        <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-white shadow-lg p-6 rounded-2xl w-96 relative">
             <button
               className="absolute top-3 right-3 text-gray-500"
