@@ -8,10 +8,13 @@ const BillDetails = () => {
   const { user } = useContext(AuthContext);
   const [bill, setBill] = useState({});
   const [showModal, setShowModal] = useState(false);
+  useEffect(() => {
+    document.title = "Bills Details | Utility Bills";
+  });
 
   // Fetch bill details from backend
   useEffect(() => {
-    fetch(`http://localhost:3000/bills/${id}`)
+    fetch(`https://utility-bills-server-side.vercel.app/bills/${id}`)
       .then((res) => res.json())
       .then((data) => setBill(data))
       .catch((err) => console.error(err));
@@ -42,7 +45,7 @@ const BillDetails = () => {
       date: new Date().toISOString(),
     };
 
-    fetch("http://localhost:3000/my-bills", {
+    fetch("https://utility-bills-server-side.vercel.app/my-bills", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newBill),

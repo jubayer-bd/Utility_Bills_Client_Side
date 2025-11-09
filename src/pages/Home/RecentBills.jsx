@@ -9,7 +9,7 @@ const RecentBills = () => {
   // 🔹 Load the 6 most recent bills
   useEffect(() => {
     axios
-      .get("http://localhost:3000/latest-bills") // replace with your actual backend URL
+      .get("https://utility-bills-server-side.vercel.app/latest-bills") // replace with your actual backend URL
       .then((res) => setBills(res.data))
       .catch((err) => console.error(err));
   }, []);

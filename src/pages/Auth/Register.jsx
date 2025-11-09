@@ -12,7 +12,6 @@ import {
 // import { AuthContext } from "../provider/AuthProvider";
 // import { app } from "../firebase/firebase.config";
 
-
 import { AuthContext } from "../../provider/AuthProvider";
 import LoadingPage from "../../components/Loading";
 import { app } from "../../Firebase/firebase.config";
@@ -32,7 +31,9 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setBtnLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
-
+  useEffect(() => {
+    document.title = "Register | Utility Bills";
+  });
   //  Password Validation
   const validatePassword = (pass) => {
     if (pass.length < 6) return "Password must be at least 6 characters";

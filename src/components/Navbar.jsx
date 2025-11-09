@@ -94,7 +94,7 @@ const Navbar = () => {
             to="/"
             className="flex items-center gap-2 text-2xl font-bold text-primary"
           >
-            <LuTickets />
+            <LuTickets /> 
             <span>
               Utility<span className="text-secondary">Bill</span>
             </span>
@@ -102,12 +102,12 @@ const Navbar = () => {
         </div>
 
         {/* Center Section */}
-        <div className="navbar-center hidden lg:flex">
+        <div className="navbar-end hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-2">{navLinks}</ul>
-        </div>
+          {/* </div> */}
 
-        {/* Right Section */}
-        <div className="navbar-end flex items-center gap-3">
+          {/* Right Section */}
+          {/* <div className="navbar-end flex items-center gap-3"> */}
           {/* ✅ Theme Toggle */}
           <button
             onClick={toggleTheme}

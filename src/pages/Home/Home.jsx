@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Banner from "./Banner";
 import Category from "./CategoryCards";
 import RecentBills from "./RecentBills";
@@ -6,13 +6,16 @@ import WhyChooseUs from "../../components/WhyChosseUs";
 import Partners from "../../components/Partners";
 
 const Home = () => {
+  useEffect(() => {
+    document.title = "Home | UtilityBills";
+  }, []);
   return (
     <div>
       <Banner />
       <Category />
       <RecentBills />
       <WhyChooseUs />
-      <Partners /> 
+      <Partners />
     </div>
   );
 };

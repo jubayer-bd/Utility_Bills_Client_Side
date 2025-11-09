@@ -24,6 +24,9 @@ const Login = () => {
   const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
+    document.title = "Login | Utility Bills";
+  });
+  useEffect(() => {
     const timer = setTimeout(() => setPageLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
@@ -109,7 +112,7 @@ const Login = () => {
             <button
               type="button"
               className="text-sm text-primary hover:underline"
-              onClick={() => navigate("/forgot-password", { state: { email } })}
+              // onClick={() => navigate("/forgot-password", { state: { email } })}
             >
               Forgot Password?
             </button>

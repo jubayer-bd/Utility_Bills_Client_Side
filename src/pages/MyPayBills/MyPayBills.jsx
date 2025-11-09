@@ -10,11 +10,15 @@ const MyPayBills = () => {
   const [loading, setLoading] = useState(true);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [currentBill, setCurrentBill] = useState(null);
-
+  useEffect(() => {
+    document.title = "My Pay Bills | Utility Bills";
+  });
   // Fetch bills for logged-in user
   const fetchMyBills = () => {
     setLoading(true);
-    fetch(`http://localhost:3000/my-bills?email=${user?.email}`)
+    fetch(
+      `https://utility-bills-server-side.vercel.app/my-bills?email=${user?.email}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setMyBills(data);
@@ -41,7 +45,10 @@ const MyPayBills = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/my-bills/${billId}`, { method: "DELETE" })
+        fetch(
+          `https://utility-bills-server-side.vercel.app/my-bills/${billId}`,
+          { method: "DELETE" }
+        )
           .then(() => {
             Swal.fire("Deleted!", "Bill has been deleted.", "success");
             fetchMyBills();
@@ -62,11 +69,14 @@ const MyPayBills = () => {
       date: form.date.value,
     };
 
-    fetch(`http://localhost:3000/my-bills/${currentBill._id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedBill),
-    })
+    fetch(
+      `https://utility-bills-server-side.vercel.app/my-bills/${currentBill._id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedBill),
+      }
+    )
       .then((res) => res.json())
       .then(() => {
         Swal.fire("Updated!", "Bill has been updated.", "success");
@@ -78,7 +88,8 @@ const MyPayBills = () => {
 
   // Download PDF
   const downloadPDF = () => {
-    if (!myBills.length) return Swal.fire("No Data", "No bills to download.", "info");
+    if (!myBills.length)
+      return Swal.fire("No Data", "No bills to download.", "info");
 
     const doc = new jsPDF();
 
@@ -92,7 +103,14 @@ const MyPayBills = () => {
     doc.text(`Total Amount: ৳${totalAmount}`, 14, 34);
 
     // Table headers and body
-    const tableColumn = ["Username", "Email", "Amount", "Address", "Phone", "Date"];
+    const tableColumn = [
+      "Username",
+      "Email",
+      "Amount",
+      "Address",
+      "Phone",
+      "Date",
+    ];
     const tableRows = myBills.map((bill) => [
       bill.username,
       bill.email,

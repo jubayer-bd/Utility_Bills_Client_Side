@@ -8,6 +8,7 @@ import Bills from "../pages/Bills/Bills";
 import BillDetails from "../pages/Bills/BillsDetails";
 import PrivateRoute from "./PrivateRoutes";
 import MyPayBills from "../pages/MyPayBills/MyPayBills";
+import AddBills from "../pages/Bills/AddBills";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "add-bill",
+        element: <AddBills />,
+      },
+      {
         path: "my-bills",
         element: (
           <PrivateRoute>
@@ -47,10 +52,7 @@ export const router = createBrowserRouter([
         path: "register",
         element: <Register />,
       },
-      {
-        path: "forgot-password",
-        element: <ForgotPassword />,
-      },
+     
     ],
   },
 ]);

@@ -8,9 +8,12 @@ import { motion } from "framer-motion";
 const Bills = () => {
   const [bills, setBills] = useState([]);
   const [filter, setFilter] = useState("All");
+  useEffect(() => {
+    document.title = "Bills | Utility Bills";
+  });
 
   useEffect(() => {
-    fetch("http://localhost:3000/bills") //
+    fetch("https://utility-bills-server-side.vercel.app/bills") //
       .then((res) => res.json())
       .then((data) => setBills(data))
       .catch((err) => console.error(err));
