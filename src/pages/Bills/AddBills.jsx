@@ -1,10 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../provider/AuthProvider";
 
 const AddBill = () => {
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    document.title = "Add Bill | Utility Bills";
+  }, []);
 
   const handleAddBill = async (e) => {
     e.preventDefault();
