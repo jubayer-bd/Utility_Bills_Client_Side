@@ -41,26 +41,38 @@ const AuthProvider = ({ children }) => {
   const logOut = async () => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "You will be logged out from your account!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, LogOut !",
-    }).then((result) => {
+      confirmButtonText: "Yes, Log Out!",
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
+        try {
+          setLoading(true);
+          await signOut(auth);
+          setUser(null);
+
+          Swal.fire({
+            title: "Logged Out!",
+            text: "You have been successfully logged out.",
+            icon: "success",
+          });
+        } catch (error) {
+          Swal.fire({
+            title: "Error!",
+            text: "Something went wrong while logging out.",
+            icon: "error",
+          });
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
       }
     });
-    setLoading(true);
-    await signOut(auth);
-    return setUser(null);
   };
+
   const resetPassword = (email) => {
     setLoading(true);
     return sendPasswordResetEmail(auth, email);

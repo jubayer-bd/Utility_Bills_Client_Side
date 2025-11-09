@@ -20,8 +20,10 @@ const Bills = () => {
 
     const url =
       filter === "All"
-        ? "http://localhost:3000//bills"
-        : `http://localhost:3000/bills?category=${encodeURIComponent(filter)}`; // encode for safe URLs
+        ? "https://utility-bills-server-side.vercel.app/bills"
+        : `https://utility-bills-server-side.vercel.app/bills?category=${encodeURIComponent(
+            filter
+          )}`; // encode for safe URLs
 
     fetch(url)
       .then((res) => res.json())
