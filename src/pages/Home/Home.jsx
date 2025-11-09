@@ -8,7 +8,7 @@ import Partners from "../../components/Partners";
 const Home = () => {
   return (
     <div>
-      {/* <Banner /> */}
+      <Banner />
       {/* <Category />
       <RecentBills />
       <WhyChooseUs />
