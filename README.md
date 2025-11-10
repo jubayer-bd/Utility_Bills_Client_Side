@@ -6,7 +6,7 @@ A complete full-stack web application built with the **MERN Stack (MongoDB, Expr
 
 ## 🌐 Live Site
 
-🔗 [Visit Live Site](https://your-live-site-url.netlify.app)  
+🔗 [Visit Live Site](https://utility-bills-f.netlify.app/)  
 _(Replace this link with your actual deployed URL)_
 
 ---
@@ -83,7 +83,7 @@ _(Replace this link with your actual deployed URL)_
 
 ### bills
 
-```json
+````json
 {
   "title": "Frequent Power Outage in Mirpur",
   "category": "Electricity",
@@ -93,8 +93,7 @@ _(Replace this link with your actual deployed URL)_
   "image": "https://example.com/power.jpg",
   "date": "2025-11-01"
 }
-```
-
+```json
 {
   "email": "user@gmail.com",
   "billId": "674e5f...",
@@ -104,3 +103,4 @@ _(Replace this link with your actual deployed URL)_
   "amount": 1200,
   "date": "2025-11-08"
 }
+````

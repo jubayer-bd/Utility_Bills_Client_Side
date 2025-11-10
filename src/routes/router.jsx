@@ -11,11 +11,13 @@ import MyPayBills from "../pages/MyPayBills/MyPayBills";
 import AddBills from "../pages/Bills/AddBills";
 import About from "../pages/About/About";
 import Profile from "../pages/Profile/Profile";
+import ErrorPage from "../pages/Error/NotFound";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
