@@ -7,7 +7,7 @@ A complete full-stack web application built with the **MERN Stack (MongoDB, Expr
 ## 🌐 Live Site
 
 🔗 [Visit Live Site](https://utility-bills-f.netlify.app/)  
-_(Replace this link with your actual deployed URL)_
+
 
 ---
 
@@ -20,13 +20,20 @@ _(Replace this link with your actual deployed URL)_
 - TailwindCSS + DaisyUI
 - SweetAlert2
 - jsPDF + jsPDF-AutoTable
+- GSAP
+- Framer-Motion
+- AXIOS
+- React-hot-toast
+- React-simple-typewriter
+- React-icons
+
 
 **Backend:**
 
 - Node.js
 - Express.js
 - MongoDB
-- Hosted on Vercel
+
 
 **Authentication:**
 
@@ -34,7 +41,7 @@ _(Replace this link with your actual deployed URL)_
 
 **Hosting:**
 
-- Client: Netlify / Firebase
+- Client: Netlify 
 - Server: Vercel
 
 ---
@@ -93,7 +100,7 @@ _(Replace this link with your actual deployed URL)_
   "image": "https://example.com/power.jpg",
   "date": "2025-11-01"
 }
-```json
+
 {
   "email": "user@gmail.com",
   "billId": "674e5f...",
