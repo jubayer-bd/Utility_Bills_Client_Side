@@ -117,7 +117,7 @@ const Navbar = () => {
         </div>
 
         {/* Right Section */}
-        <div className="navbar-end  md:flex items-center gap-3">
+        <div className="navbar-end  md:flex items-center md:gap-3">
           {/*  Theme Toggle */}
           <button
             onClick={toggleTheme}
@@ -129,15 +129,15 @@ const Navbar = () => {
 
           {/* Auth Section */}
           {user ? (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center md:gap-3">
               <div
-                className="tooltip tooltip-bottom"
+                className="tooltip tooltip-bottom w-10"
                 data-tip={user?.displayName || "User"}
               >
                 <img
                   src={user?.photoURL || <LuCircleUser />}
                   alt="profile"
-                  className="w-9 h-9 rounded-full border-2 border-primary"
+                  className="w-9  h-9 rounded-full border-2 border-primary"
                 />
               </div>
               <button
