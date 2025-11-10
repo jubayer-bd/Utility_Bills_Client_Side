@@ -47,7 +47,7 @@ const Bills = () => {
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="border border-gray-300 rounded-lg px-4 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-gray-300  rounded-lg px-4 py-2 text-gray-700 dark:text-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="All">All Categories</option>
           <option value="Electricity">Electricity</option>
@@ -67,7 +67,7 @@ const Bills = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6"
+          className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6"
         >
           {bills.length > 0 ? (
             bills.map((bill, index) => (
@@ -84,7 +84,7 @@ const Bills = () => {
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-5 space-y-2">
-                  <h3 className="text-xl font-semibold">{bill.title}</h3>
+                  <h3 className="text-xl font-semibold h-10 mb-4">{bill.title}</h3>
                   <p className="flex items-center gap-2 text-gray-600">
                     <MdCategory className="text-blue-500" /> {bill.category}
                   </p>

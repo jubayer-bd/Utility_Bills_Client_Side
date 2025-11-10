@@ -10,34 +10,34 @@ const Category = () => {
       name: "Electricity",
       icon: <FaBolt className="text-yellow-400 text-4xl" />,
       bg: "bg-yellow-100",
-      link: "/bills?category=electricity",
+      
     },
     {
       id: 2,
       name: "Gas",
       icon: <FaGasPump className="text-red-400 text-4xl" />,
       bg: "bg-red-100",
-      link: "/bills?category=gas",
+     
     },
     {
       id: 3,
       name: "Water",
       icon: <FaTint className="text-blue-400 text-4xl" />,
       bg: "bg-blue-100",
-      link: "/bills?category=water",
+      
     },
     {
       id: 4,
       name: "Internet",
       icon: <FaWifi className="text-purple-400 text-4xl" />,
       bg: "bg-purple-100",
-      link: "/bills?category=internet",
+     
     },
   ];
 
   return (
     <section className="py-16 ">
-      <div className="max-w-6xl mx-auto px-6 text-center">
+      <div className=" mx-auto px-6 text-center">
         <h2 className="section-title text-3xl md:text-4xl font-bold text-gray-800 mb-10">
           Browse by Category
         </h2>
@@ -58,12 +58,7 @@ const Category = () => {
               <h3 className="section-title text-lg font-semibold text-gray-700">
                 {category.name}
               </h3>
-              <Link
-                to={category.link}
-                className="mt-4 text-blue-500 font-medium hover:underline"
-              >
-                View Bills →
-              </Link>
+             
             </motion.div>
           ))}
         </div>

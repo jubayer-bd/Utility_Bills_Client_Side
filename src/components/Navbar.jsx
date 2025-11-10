@@ -7,7 +7,7 @@ import {
   MdOutlineLogin,
   MdOutlineLogout,
 } from "react-icons/md";
-import { LuTickets } from "react-icons/lu";
+import { LuCircleUser, LuTickets } from "react-icons/lu";
 import { HiOutlineLogin, HiOutlineMenuAlt3 } from "react-icons/hi";
 
 const Navbar = () => {
@@ -117,11 +117,11 @@ const Navbar = () => {
         </div>
 
         {/* Right Section */}
-        <div className="navbar-end flex items-center gap-3">
-          {/* ✅ Theme Toggle */}
+        <div className="navbar-end  md:flex items-center gap-3">
+          {/*  Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="btn btn-sm btn-ghost text-xl"
+            className="btn btn-sm btn-ghost text-xl hidden md:flex"
             title="Toggle Theme"
           >
             {theme === "dark" ? <MdOutlineLightMode /> : <MdDarkMode />}
@@ -135,7 +135,7 @@ const Navbar = () => {
                 data-tip={user?.displayName || "User"}
               >
                 <img
-                  src={user?.photoURL || "https://i.ibb.co/5Y9jR7x/user.png"}
+                  src={user?.photoURL || <LuCircleUser />}
                   alt="profile"
                   className="w-9 h-9 rounded-full border-2 border-primary"
                 />
@@ -145,30 +145,30 @@ const Navbar = () => {
                 className="btn btn-sm bg-error text-white hover:bg-error/80 flex items-center gap-1"
               >
                 <MdOutlineLogout />
-                <span className="hidden sm:inline">Logout</span>
+                <span className="">Logout</span>
               </button>
             </div>
           ) : (
             <div className="flex gap-3">
               <Link
                 to="/login"
-                className="btn btn-sm bg-white border-primary text-primary hover:bg-primary/10 flex items-center gap-1"
+                className="btn btn-sm bg-white  border-primary text-primary hover:bg-primary/10 flex items-center gap-1"
               >
                 <MdOutlineLogin />
-                <span className="hidden sm:inline">Login</span>
+                <span className="">Login</span>
               </Link>
               <Link
                 to="/register"
-                className="btn btn-sm bg-primary text-white hover:bg-primary/90 flex items-center gap-1"
+                className="btn btn-sm bg-primary text-white hover:bg-primary/90 hidden md:flex items-center gap-1"
               >
                 <HiOutlineLogin />
-                <span className="hidden sm:inline">Register</span>
+                <span className="">Register</span>
               </Link>
             </div>
           )}
 
           {/* Mobile Menu */}
-          <div className="dropdown dropdown-end lg:hidden">
+          <div className="dropdown dropdown-end shadow-2xl lg:hidden">
             <label tabIndex={0} className="btn btn-ghost text-2xl">
               <HiOutlineMenuAlt3 />
             </label>
@@ -177,6 +177,13 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow bg-base-100 rounded-box w-52"
             >
               {navLinks}
+              <button
+                onClick={toggleTheme}
+                className=" cursor-pointer text-xl flex px-4 "
+                title="Toggle Theme"
+              >
+                {theme === "dark" ? <MdOutlineLightMode /> : <MdDarkMode />}
+              </button>
             </ul>
           </div>
         </div>

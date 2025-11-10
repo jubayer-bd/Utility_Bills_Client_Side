@@ -10,7 +10,7 @@ const Home = () => {
     document.title = "Home | UtilityBills";
   }, []);
   return (
-    <div>
+    <div className="lg:max-w-7xl mx-auto max-w-11/12">
       <Banner />
       <Category />
       <RecentBills />

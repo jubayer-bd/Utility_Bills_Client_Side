@@ -9,8 +9,8 @@ const Banner = () => {
         "https://i.pinimg.com/1200x/e7/4c/a9/e74ca913ea2df3765040a081a39383b5.jpg",
       title: "Manage Your Electricity Bills Easily",
       subtitle: "Track your monthly usage and payments in one place.",
-      // overlay: "from-blue-800 via-blue-600 to-blue-400", // Removed
-      textColor: "text-gray-900", // Changed for contrast
+
+      textColor: "text-gray-900",
     },
     {
       image:
@@ -18,7 +18,7 @@ const Banner = () => {
       title: "Pay Your Water Bills On Time",
       subtitle: "Never miss a due date with automated reminders.",
       // overlay: "from-teal-700 via-teal-500 to-teal-400", // Removed
-      textColor: "text-gray-900", // Changed for contrast
+      textColor: "text-gray-900",
     },
     {
       image:
@@ -26,7 +26,7 @@ const Banner = () => {
       title: "Simplify Your Gas Bill Management",
       subtitle: "View, pay, and download receipts instantly.",
       // overlay: "from-orange-700 via-orange-500 to-orange-400", // Removed
-      textColor: "text-gray-900", // Changed for contrast
+      textColor: "text-gray-900",
     },
     {
       image:
@@ -34,7 +34,7 @@ const Banner = () => {
       title: "Internet Bills Made Simple",
       subtitle: "Manage multiple accounts in one dashboard.",
       // overlay: "from-purple-700 via-purple-500 to-purple-400", // Removed
-      textColor: "text-gray-900", // Changed for contrast
+      textColor: "text-gray-900",
     },
     {
       image:
@@ -42,7 +42,7 @@ const Banner = () => {
       title: "All Your Utility Bills, One Platform",
       subtitle: "Secure, fast, and convenient bill management.",
       // overlay: "from-gray-800 via-gray-600 to-gray-400", // Removed
-      textColor: "text-gray-900", // Changed for contrast
+      textColor: "text-gray-900",
     },
   ];
 
@@ -60,16 +60,13 @@ const Banner = () => {
 
   return (
     <section
-      className="relative h-[70vh] sm:h-[80vh] md:h-[85vh] flex items-center justify-center overflow-hidden transition-all duration-700"
+      className="relative h-[30vh]  md:h-[40vh] lg:h-[60vh]  flex items-center justify-center overflow-hidden transition-all duration-700 rounded-xl my-10"
       style={{
         backgroundImage: `url(${currentSlide.image})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      {/* Overlay div removed as requested */}
-      {/* If you find the text hard to read, you might need to add a subtle dark background to the text container or a very slight, semi-transparent overlay. */}
-
       {/* Content */}
       <motion.div
         key={currentIndex}
@@ -77,7 +74,7 @@ const Banner = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -30 }}
         transition={{ duration: 0.8 }}
-        className={`relative z-10 text-center px-6 ${currentSlide.textColor}`}
+        className={`relative z-10 text-center px-6 text-gray-900 `}
       >
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
           <Typewriter

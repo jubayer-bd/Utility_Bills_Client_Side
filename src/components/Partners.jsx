@@ -4,7 +4,7 @@ const Partners = () => {
   const partners = [
     {
       name: "DESCO",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlooKh5l2VmLHmLvnprXjTZF3bEFWr_CpukA&s",
+      img: "https://play-lh.googleusercontent.com/6SONPi2ntkdffBNkxTLlmW8cw4XBcqUYbuNUJKSS4oLE3Au44FtfGK9ijDHjAh53lg=w480-h960-rw",
     },
     {
       name: "Titas Gas",

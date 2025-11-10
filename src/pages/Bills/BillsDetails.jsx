@@ -91,7 +91,7 @@ const BillDetails = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4 }}
-          className="max-w-4xl mx-auto shadow rounded-2xl overflow-hidden"
+          className="max-w-4xl mx-auto shadow-lg  rounded-2xl overflow-hidden"
         >
           <img
             src={bill.image}
@@ -131,9 +131,11 @@ const BillDetails = () => {
                 Pay Bill
               </button>
               {!isCurrentMonth() && (
-                <span className="text-red-500 font-semibold ml-4">
-                  Only current month bills can be paid.
-                </span>
+                <small>
+                  <span className="text-red-500 font-semibold ml-4">
+                    Only current month bills can be paid.
+                  </span>
+                </small>
               )}
             </div>
           </div>
@@ -141,25 +143,29 @@ const BillDetails = () => {
       )}
 
       {/* Modal */}
+
       {showModal && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+          // ✅ backdrop adjusts with theme
+          className="fixed inset-0 bg-gray-900/60 dark:bg-black/70 flex items-center justify-center z-50"
         >
           <motion.div
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.3 }}
-            className="p-6 bg-white shadow-lg rounded-2xl w-96 relative"
+            // ✅ modal bg + text color
+            className="p-6 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 shadow-2xl rounded-2xl w-96 relative"
           >
             <button
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+              className="absolute top-3 right-3 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               onClick={() => setShowModal(false)}
             >
               ✕
             </button>
+
             <h3 className="text-xl font-semibold mb-4 text-center">
               Pay Bill Form
             </h3>
@@ -169,46 +175,46 @@ const BillDetails = () => {
                 type="email"
                 value={user?.email || ""}
                 readOnly
-                className="w-full border rounded-lg p-2 bg-gray-100"
+                className="w-full border rounded-lg p-2 bg-gray-100 dark:bg-gray-700 dark:border-gray-600"
               />
               <input
                 type="text"
                 value={bill._id}
                 readOnly
-                className="w-full border rounded-lg p-2 bg-gray-100"
+                className="w-full border rounded-lg p-2 bg-gray-100 dark:bg-gray-700 dark:border-gray-600"
               />
               <input
                 type="number"
                 value={bill.amount}
                 readOnly
-                className="w-full border rounded-lg p-2 bg-gray-100"
+                className="w-full border rounded-lg p-2 bg-gray-100 dark:bg-gray-700 dark:border-gray-600"
               />
               <input
                 type="text"
                 name="username"
                 placeholder="Enter your name"
                 required
-                className="w-full border rounded-lg p-2"
+                className="w-full border rounded-lg p-2 bg-gray-50 dark:bg-gray-800 dark:border-gray-600"
               />
               <input
                 type="text"
                 name="address"
                 placeholder="Address"
                 required
-                className="w-full border rounded-lg p-2"
+                className="w-full border rounded-lg p-2 bg-gray-50 dark:bg-gray-800 dark:border-gray-600"
               />
               <input
                 type="tel"
                 name="phone"
                 placeholder="Phone number"
                 required
-                className="w-full border rounded-lg p-2"
+                className="w-full border rounded-lg p-2 bg-gray-50 dark:bg-gray-800 dark:border-gray-600"
               />
               <textarea
                 name="additional"
                 placeholder="Additional info (optional)"
                 rows="2"
-                className="w-full border rounded-lg p-2"
+                className="w-full border rounded-lg p-2 bg-gray-50 dark:bg-gray-800 dark:border-gray-600"
               ></textarea>
               <button
                 type="submit"

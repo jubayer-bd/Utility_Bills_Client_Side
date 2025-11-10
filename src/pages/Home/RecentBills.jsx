@@ -24,9 +24,11 @@ const RecentBills = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="max-w-7xl mx-auto px-4 py-12"
+      className=" mx-auto px-4 py-12"
     >
-      <h2 className="text-3xl font-bold text-center mb-6">Recently Added Bills</h2>
+      <h2 className="text-3xl font-bold text-center mb-6">
+        Recently Added Bills
+      </h2>
       <p className="text-center text-gray-600 dark:text-gray-300 mb-10">
         Check out the latest bills added by users.
       </p>
@@ -36,13 +38,15 @@ const RecentBills = () => {
           <span className="loading loading-spinner loading-lg text-primary"></span>
         </div>
       ) : bills.length === 0 ? (
-        <p className="text-center text-gray-500 dark:text-gray-300 text-lg">No recent bills found.</p>
+        <p className="text-center text-gray-500 dark:text-gray-300 text-lg">
+          No recent bills found.
+        </p>
       ) : (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6"
+          className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6"
         >
           {bills.map((bill, index) => (
             <motion.div
@@ -58,7 +62,9 @@ const RecentBills = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-5 space-y-2">
-                <h3 className="text-xl font-semibold">{bill.title}</h3>
+                <h3 className="text-xl font-semibold h-10 mb-4">
+                  {bill.title}
+                </h3>
                 <p className="flex items-center gap-2 text-gray-600">
                   <MdCategory className="text-blue-500" /> {bill.category}
                 </p>
@@ -70,7 +76,7 @@ const RecentBills = () => {
                 </p>
 
                 <Link to={`/bills/${bill._id}`}>
-                  <button className="mt-3 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                  <button className="mt-3 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition ">
                     See Details
                   </button>
                 </Link>
