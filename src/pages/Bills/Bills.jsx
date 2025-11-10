@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router"; // ✅ FIXED (was "react-router")
+import { Link } from "react-router";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { MdCategory } from "react-icons/md";
 import { IoMdCash } from "react-icons/io";
@@ -14,7 +14,6 @@ const Bills = () => {
     document.title = "Bills | Utility Bills";
   }, []);
 
-  // ✅ Fetch bills dynamically based on selected category
   useEffect(() => {
     setLoading(true);
 
@@ -23,7 +22,7 @@ const Bills = () => {
         ? "https://utility-bills-server-side.vercel.app/bills"
         : `https://utility-bills-server-side.vercel.app/bills?category=${encodeURIComponent(
             filter
-          )}`; // encode for safe URLs
+          )}`;
 
     fetch(url)
       .then((res) => res.json())
@@ -33,7 +32,12 @@ const Bills = () => {
   }, [filter]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="max-w-7xl mx-auto px-4 py-12"
+    >
       <h2 className="text-3xl font-bold text-center mb-6">
         Explore All Utility Bills
       </h2>
@@ -53,19 +57,26 @@ const Bills = () => {
         </select>
       </div>
 
-      {/* Bills Grid */}
+      {/* 🔄 Loading Spinner */}
       {loading ? (
-        <p className="text-center text-gray-500">Loading...</p>
+        <div className="flex justify-center items-center py-16">
+          <span className="loading loading-spinner loading-lg text-primary"></span>
+        </div>
       ) : (
-        <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6"
+        >
           {bills.length > 0 ? (
-            bills.map((bill) => (
+            bills.map((bill, index) => (
               <motion.div
-                key={bill._id || bill.title} // ✅ fallback key
-                initial={{ opacity: 0, y: 30 }}
+                key={bill._id || bill.title || index}
+                initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="rounded-2xl shadow-md bg-white hover:shadow-lg transition overflow-hidden"
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                className="rounded-2xl shadow-md bg-white hover:shadow-xl transition overflow-hidden"
               >
                 <img
                   src={bill.image}
@@ -97,9 +108,9 @@ const Bills = () => {
               No bills found.
             </p>
           )}
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

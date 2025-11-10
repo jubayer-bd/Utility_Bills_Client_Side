@@ -15,47 +15,47 @@ const MyPayBills = () => {
     document.title = "My Pay Bills | Utility Bills";
   }, []);
 
-  // Fetch user's bills
+  // 🔹 Fetch user's bills
   const fetchMyBills = () => {
     setLoading(true);
     fetch(
       `https://utility-bills-server-side.vercel.app/my-bills?email=${user?.email}`
     )
       .then((res) => res.json())
-      .then((data) => {
-        setMyBills(data);
-        setLoading(false);
-      })
-      .catch((err) => console.error(err));
+      .then((data) => setMyBills(data))
+      .catch(() => Swal.fire("Error", "Failed to load bills", "error"))
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
     if (user?.email) fetchMyBills();
   }, [user]);
 
-  // Calculate totals
+  // 🔹 Totals
   const totalCount = myBills.length;
   const totalAmount = myBills.reduce(
     (sum, b) => sum + Number(b.amount || 0),
     0
   );
 
-  // Delete bill
-  const handleDelete = (billId) => {
+  // 🔹 Delete Bill
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You will permanently delete this bill!",
+      text: "This bill will be permanently deleted!",
       icon: "warning",
       showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `https://utility-bills-server-side.vercel.app/my-bills/${billId}`,
-          { method: "DELETE" }
-        )
+        fetch(`https://utility-bills-server-side.vercel.app/my-bills/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
           .then(() => {
-            Swal.fire("Deleted!", "Bill has been deleted.", "success");
+            Swal.fire("Deleted!", "Your bill has been removed.", "success");
             fetchMyBills();
           })
           .catch(() => Swal.fire("Error!", "Failed to delete bill.", "error"));
@@ -63,7 +63,7 @@ const MyPayBills = () => {
     });
   };
 
-  // Update bill
+  // 🔹 Update Bill
   const handleUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -91,7 +91,7 @@ const MyPayBills = () => {
       .catch(() => Swal.fire("Error!", "Failed to update bill.", "error"));
   };
 
-  // ✅ Fixed PDF download
+  // 🔹 PDF Download (jsPDF + autoTable)
   const downloadPDF = () => {
     if (!myBills.length)
       return Swal.fire("No Data", "No bills to download.", "info");
@@ -103,18 +103,14 @@ const MyPayBills = () => {
     });
 
     doc.setFont("helvetica", "normal");
-
-    // Header
     doc.setFontSize(18);
     doc.text("My Pay Bills Report", 40, 50);
 
-    // Totals
     doc.setFontSize(12);
     doc.text(`Total Bills Paid: ${totalCount}`, 40, 70);
     doc.text(`Total Amount: BDT ${totalAmount}`, 40, 90);
 
-    // Table
-    const tableColumn = [
+    const columns = [
       "Username",
       "Email",
       "Amount (BDT)",
@@ -123,7 +119,7 @@ const MyPayBills = () => {
       "Date",
     ];
 
-    const tableRows = myBills.map((bill) => [
+    const rows = myBills.map((bill) => [
       bill.username || "-",
       bill.email || "-",
       bill.amount || "0",
@@ -132,18 +128,17 @@ const MyPayBills = () => {
       new Date(bill.date).toLocaleDateString(),
     ]);
 
-    tableRows.push(["", "", `Total: ${totalAmount}`, "", "", ""]);
+    rows.push(["", "", `Total: ${totalAmount}`, "", "", ""]);
 
     autoTable(doc, {
-      head: [tableColumn],
-      body: tableRows,
+      head: [columns],
+      body: rows,
       startY: 110,
       theme: "grid",
       styles: { fontSize: 10, cellPadding: 5, halign: "center" },
       headStyles: { fillColor: [41, 128, 185], textColor: 255 },
-      bodyStyles: { textColor: [40, 40, 40] },
       didParseCell: (data) => {
-        if (data.row.index === tableRows.length - 1) {
+        if (data.row.index === rows.length - 1) {
           data.cell.styles.fontStyle = "bold";
           data.cell.styles.fillColor = [240, 240, 240];
         }
@@ -153,30 +148,31 @@ const MyPayBills = () => {
     doc.save("my_bills_report.pdf");
   };
 
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (loading)
+    return <p className="text-center mt-10 text-gray-500">Loading...</p>;
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h2 className="text-3xl font-bold mb-4">My Pay Bills</h2>
+    <div className="max-w-7xl mx-auto px-4 py-12">
+      <h2 className="text-3xl font-bold mb-6 text-center">My Pay Bills</h2>
 
-      {/* Header Bar */}
-      <div className="mb-6 flex justify-between items-center">
-        <p>
+      {/* Header Info Bar */}
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+        <p className="text-gray-700">
           Total Bills Paid: <strong>{totalCount}</strong> | Total Amount:{" "}
           <strong>BDT {totalAmount}</strong>
         </p>
         <button
           onClick={downloadPDF}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
         >
           Download Report
         </button>
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full border rounded-lg">
-          <thead className="bg-gray-100">
+      <div className="overflow-x-auto shadow-lg rounded-lg">
+        <table className="min-w-full border text-sm">
+          <thead className="bg-gray-100 text-gray-700">
             <tr>
               <th className="py-2 px-4 border">Username</th>
               <th className="py-2 px-4 border">Email</th>
@@ -189,10 +185,12 @@ const MyPayBills = () => {
           </thead>
           <tbody>
             {myBills.map((bill) => (
-              <tr key={bill._id} className="text-center">
+              <tr key={bill._id} className="text-center hover:bg-gray-50">
                 <td className="py-2 px-4 border">{bill.username}</td>
                 <td className="py-2 px-4 border">{bill.email}</td>
-                <td className="py-2 px-4 border">BDT {bill.amount}</td>
+                <td className="py-2 px-4 border font-medium text-gray-800">
+                  BDT {bill.amount}
+                </td>
                 <td className="py-2 px-4 border">{bill.address}</td>
                 <td className="py-2 px-4 border">{bill.phone}</td>
                 <td className="py-2 px-4 border">
@@ -223,15 +221,15 @@ const MyPayBills = () => {
 
       {/* Update Modal */}
       {showUpdateModal && currentBill && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/30">
-          <div className="bg-white shadow-lg p-6 rounded-2xl w-96 relative">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+          <div className="bg-white rounded-2xl shadow-xl w-96 p-6 relative">
             <button
-              className="absolute top-3 right-3 text-gray-500"
+              className="absolute top-3 right-3 text-gray-500 hover:text-red-500"
               onClick={() => setShowUpdateModal(false)}
             >
               ✕
             </button>
-            <h3 className="text-xl font-semibold mb-4 text-center">
+            <h3 className="text-xl font-semibold text-center mb-4">
               Update Bill
             </h3>
             <form onSubmit={handleUpdate} className="space-y-3">

@@ -2,22 +2,27 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../provider/AuthProvider";
+import { motion } from "framer-motion";
 
 const BillDetails = () => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
   const [bill, setBill] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     document.title = "Bills Details | Utility Bills";
-  });
+  }, []);
 
-  // Fetch bill details from backend
+  // Fetch bill details
   useEffect(() => {
+    setLoading(true);
     fetch(`https://utility-bills-server-side.vercel.app/bills/${id}`)
       .then((res) => res.json())
       .then((data) => setBill(data))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
   }, [id]);
 
   // Check if bill belongs to current month
@@ -71,60 +76,86 @@ const BillDetails = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto shadow rounded-2xl overflow-hidden ">
-        <img
-          src={bill.image}
-          alt={bill.title}
-          className="w-full h-72 object-cover"
-        />
-        <div className="p-6 space-y-4">
-          <h2 className="text-3xl font-bold">{bill.title}</h2>
-          <p>
-            <strong>Category:</strong> {bill.category}
-          </p>
-          <p>
-            <strong>Location:</strong> {bill.location}
-          </p>
-          <p className="leading-relaxed">
-            <strong>Description:</strong> {bill.description}
-          </p>
-          <p className="text-lg font-semibold text-blue-600">
-            Amount: ৳{bill.amount}
-          </p>
-          <p className="text-sm text-gray-500">
-            Bill Date:{" "}
-            {bill.date ? new Date(bill.date).toLocaleDateString() : "N/A"}
-          </p>
-
-          {/* Pay Bill Button */}
-          <div className="flex items-center mt-3">
-            <button
-              disabled={!isCurrentMonth()}
-              onClick={() => setShowModal(true)}
-              className={`px-6 py-2 rounded-lg text-white font-medium ${
-                isCurrentMonth()
-                  ? "bg-green-600 hover:bg-green-700"
-                  : "bg-gray-400 cursor-not-allowed"
-              }`}
-            >
-              Pay Bill
-            </button>
-            {!isCurrentMonth() && (
-              <span className="text-red-500 font-semibold ml-4">
-                Only current month bills can be paid.
-              </span>
-            )}
-          </div>
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="container mx-auto px-4 py-12"
+    >
+      {loading ? (
+        <div className="flex justify-center items-center py-20">
+          <span className="loading loading-spinner loading-lg text-primary"></span>
         </div>
-      </div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4 }}
+          className="max-w-4xl mx-auto shadow rounded-2xl overflow-hidden"
+        >
+          <img
+            src={bill.image}
+            alt={bill.title}
+            className="w-full h-72 object-cover"
+          />
+          <div className="p-6 space-y-4">
+            <h2 className="text-3xl font-bold">{bill.title}</h2>
+            <p>
+              <strong>Category:</strong> {bill.category}
+            </p>
+            <p>
+              <strong>Location:</strong> {bill.location}
+            </p>
+            <p className="leading-relaxed">
+              <strong>Description:</strong> {bill.description}
+            </p>
+            <p className="text-lg font-semibold text-blue-600">
+              Amount: ৳{bill.amount}
+            </p>
+            <p className="text-sm text-gray-500">
+              Bill Date:{" "}
+              {bill.date ? new Date(bill.date).toLocaleDateString() : "N/A"}
+            </p>
+
+            {/* Pay Bill Button */}
+            <div className="flex items-center mt-3">
+              <button
+                disabled={!isCurrentMonth()}
+                onClick={() => setShowModal(true)}
+                className={`px-6 py-2 rounded-lg text-white font-medium ${
+                  isCurrentMonth()
+                    ? "bg-green-600 hover:bg-green-700"
+                    : "bg-gray-400 cursor-not-allowed"
+                }`}
+              >
+                Pay Bill
+              </button>
+              {!isCurrentMonth() && (
+                <span className="text-red-500 font-semibold ml-4">
+                  Only current month bills can be paid.
+                </span>
+              )}
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0  flex items-center justify-center z-50">
-          <div className=" p-6 bg-white shadow-lg rounded-2xl w-96 relative">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+        >
+          <motion.div
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.3 }}
+            className="p-6 bg-white shadow-lg rounded-2xl w-96 relative"
+          >
             <button
-              className="absolute top-3 right-3 text-gray-500"
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
               onClick={() => setShowModal(false)}
             >
               ✕
@@ -181,15 +212,15 @@ const BillDetails = () => {
               ></textarea>
               <button
                 type="submit"
-                className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
+                className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
               >
                 Confirm Payment
               </button>
             </form>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

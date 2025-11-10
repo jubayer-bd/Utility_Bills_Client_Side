@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../provider/AuthProvider";
+import { motion } from "framer-motion"; // for animation
 
 const AddBill = () => {
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     document.title = "Add Bill | Utility Bills";
   }, []);
@@ -65,14 +67,26 @@ const AddBill = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10">
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="max-w-3xl mx-auto px-4 py-10"
+    >
       <h2 className="text-3xl font-semibold text-center mb-6">
         Add a New Bill
       </h2>
 
+      {/* Spinner while loading */}
+      {loading && (
+        <div className="flex justify-center items-center mb-4">
+          <span className="loading loading-spinner loading-lg text-primary"></span>
+        </div>
+      )}
+
       <form
         onSubmit={handleAddBill}
-        className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-base-200 p-6 rounded-2xl shadow"
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-base-200 p-6 rounded-2xl shadow-lg"
       >
         <input
           name="title"
@@ -138,12 +152,19 @@ const AddBill = () => {
         <button
           type="submit"
           disabled={loading}
-          className="btn btn-primary md:col-span-2"
+          className="btn btn-primary md:col-span-2 flex justify-center items-center gap-2"
         >
-          {loading ? "Adding..." : "Add Bill"}
+          {loading ? (
+            <>
+              <span className="loading loading-spinner"></span>
+              Adding...
+            </>
+          ) : (
+            "Add Bill"
+          )}
         </button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 
