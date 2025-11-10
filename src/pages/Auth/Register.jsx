@@ -104,7 +104,7 @@ const Register = () => {
           {/* Name */}
           <div>
             <label className="label">
-              <span className="label-text font-medium">Name</span>
+              <span className=" label-text font-medium">Name</span>
             </label>
             <input
               type="text"
@@ -159,13 +159,13 @@ const Register = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <button
+              <span
                 type="button"
                 className="absolute right-3 top-3 text-xl text-gray-500 z-10 cursor-pointer"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-              </button>
+              </span>
             </div>
             {passwordError && (
               <p className="text-red-500 text-sm mt-1">{passwordError}</p>

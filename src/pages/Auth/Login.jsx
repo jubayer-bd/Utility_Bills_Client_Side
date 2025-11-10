@@ -97,25 +97,25 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <button
+              <span
                 type="button"
                 className="absolute right-3 top-3 text-xl text-gray-500 cursor-pointer z-10"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-              </button>
+              </span>
             </div>
           </div>
 
           {/* Forgot Password */}
           <div className="text-right">
-            <button
+            <span
               type="button"
               className="text-sm text-primary hover:underline"
               // onClick={() => navigate("/forgot-password", { state: { email } })}
             >
               Forgot Password?
-            </button>
+            </span>
           </div>
 
           {/* Login Button */}

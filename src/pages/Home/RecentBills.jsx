@@ -1,72 +1,85 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import { MdCategory } from "react-icons/md";
+import { IoMdCash } from "react-icons/io";
 import { motion } from "framer-motion";
 import axios from "axios";
 
 const RecentBills = () => {
   const [bills, setBills] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // 🔹 Load the 6 most recent bills
   useEffect(() => {
+    setLoading(true);
     axios
-      .get("https://utility-bills-server-side.vercel.app/latest-bills") // replace with your actual backend URL
+      .get("https://utility-bills-server-side.vercel.app/latest-bills") // fetch 6 latest bills
       .then((res) => setBills(res.data))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
   }, []);
 
   return (
-    <section className="py-16 ">
-      <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-10">
-          Recently Added Bills
-        </h2>
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="max-w-7xl mx-auto px-4 py-12"
+    >
+      <h2 className="text-3xl font-bold text-center mb-6">Recently Added Bills</h2>
+      <p className="text-center text-gray-600 dark:text-gray-300 mb-10">
+        Check out the latest bills added by users.
+      </p>
 
-        {bills.length === 0 ? (
-          <p className="text-center text-gray-500">Loading latest bills...</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {bills.map((bill) => (
-              <motion.div
-                key={bill._id}
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl shadow-md hover:shadow-xl overflow-hidden border border-gray-100"
-              >
-                <div className="relative">
-                  <img
-                    src={bill.image}
-                    alt={bill.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <span className="absolute top-3 left-3 bg-red-500 text-white text-xs font-medium px-3 py-1 rounded-full">
-                    {bill.category}
-                  </span>
-                </div>
+      {loading ? (
+        <div className="flex justify-center items-center py-16">
+          <span className="loading loading-spinner loading-lg text-primary"></span>
+        </div>
+      ) : bills.length === 0 ? (
+        <p className="text-center text-gray-500 dark:text-gray-300 text-lg">No recent bills found.</p>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6"
+        >
+          {bills.map((bill, index) => (
+            <motion.div
+              key={bill._id || bill.title || index}
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+              className="rounded-2xl shadow-md bg-white hover:shadow-xl transition overflow-hidden"
+            >
+              <img
+                src={bill.image}
+                alt={bill.title}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-5 space-y-2">
+                <h3 className="text-xl font-semibold">{bill.title}</h3>
+                <p className="flex items-center gap-2 text-gray-600">
+                  <MdCategory className="text-blue-500" /> {bill.category}
+                </p>
+                <p className="flex items-center gap-2 text-gray-600">
+                  <FaMapMarkerAlt className="text-blue-500" /> {bill.location}
+                </p>
+                <p className="flex items-center gap-2 font-semibold text-gray-800">
+                  <IoMdCash className="text-green-600" /> BDT {bill.amount}
+                </p>
 
-                <div className="p-5">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                    {bill.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 mb-1">
-                    <strong>Location:</strong> {bill.location}
-                  </p>
-                  <p className="text-sm text-gray-500 mb-4">
-                    <strong>Date:</strong> {bill.date}
-                  </p>
-
-                  <Link
-                    to={`/bills/${bill._id}`}
-                    className="block text-center bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 rounded-lg transition"
-                  >
+                <Link to={`/bills/${bill._id}`}>
+                  <button className="mt-3 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
                     See Details
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
+                  </button>
+                </Link>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
+    </motion.div>
   );
 };
 

@@ -95,26 +95,12 @@ const Footer = () => {
 
         {/* --- Newsletter --- */}
         <div>
-          <h4 className="text-2xl font-bold text-primary mb-3">Subscribe</h4>
-          <p className="text-sm text-gray-600 mb-3">
-            Get notified about your latest bills and updates.
-          </p>
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className="flex items-center"
-          >
-            <input
-              type="email"
-              placeholder="Your Email"
-              className="input input-bordered w-full rounded-r-none"
-            />
-            <button
-              type="submit"
-              className="btn btn-primary rounded-l-none text-sm"
-            >
-              Subscribe
-            </button>
-          </form>
+          <h4 className="text-2xl font-bold text-primary mb-3">Legal</h4>
+          <ul className="space-y-2 text-sm text-gray-600">
+            <li className="">Terms of use</li>
+            <li className="">Privacy policy</li>
+            <li className="">Cookie policy</li>
+          </ul>
         </div>
       </div>
 

@@ -14,7 +14,7 @@
   default: true;
 
   /* ⚡ Utility Bill Management System Custom Theme */
-  --color-primary: #3B82F6; /* Bright Utility Blue (Electricity / Internet) */
+  --color-primary: #3b82f6; /* Bright Utility Blue (Electricity / Internet) */
   --color-secondary: #10b981; /* Green Energy (Gas / Water) */
   --color-accent: #f59e0b; /* Accent Gold for Highlights */
   --color-neutral: #f5f5f5; /* Neutral light gray background */
