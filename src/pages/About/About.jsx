@@ -3,7 +3,7 @@ import { FaBolt, FaBurn, FaTint, FaWifi } from "react-icons/fa";
 
 const About = () => {
   useEffect(() => {
-    document.title = "About | Utility Bills";
+    document.title = "About | UtilityBill";
   }, []);
   return (
     <div className="max-w-6xl mx-auto px-4 py-12 space-y-16">

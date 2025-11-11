@@ -11,7 +11,7 @@ const Bills = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.title = "Bills | Utility Bills";
+    document.title = "Bills | UtilityBill";
   }, []);
 
   useEffect(() => {

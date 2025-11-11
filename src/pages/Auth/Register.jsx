@@ -32,7 +32,7 @@ const Register = () => {
   const [loading, setBtnLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   useEffect(() => {
-    document.title = "Register | Utility Bills";
+    document.title = "Register | UtilityBill";
   });
   //  Password Validation
   const validatePassword = (pass) => {

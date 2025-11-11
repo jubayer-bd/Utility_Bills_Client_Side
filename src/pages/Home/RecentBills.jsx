@@ -29,7 +29,7 @@ const RecentBills = () => {
       <h2 className="text-3xl font-bold text-center mb-6">
         Recently Added Bills
       </h2>
-      <p className="text-center text-gray-600 dark:text-gray-300 mb-10">
+      <p className="text-center text-gray-800 dark:text-gray-200 mb-10">
         Check out the latest bills added by users.
       </p>
 

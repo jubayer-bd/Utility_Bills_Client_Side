@@ -8,7 +8,7 @@ const AddBill = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    document.title = "Add Bill | Utility Bills";
+    document.title = "Add Bill | UtilityBill";
   }, []);
 
   const handleAddBill = async (e) => {

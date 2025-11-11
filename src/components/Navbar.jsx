@@ -102,7 +102,7 @@ const Navbar = () => {
         <div className="navbar-start">
           <Link
             to="/"
-            className="flex items-center gap-2 text-2xl font-bold text-primary"
+            className="flex items-center gap-2 sm:ml-1 text-2xl font-bold text-primary"
           >
             <LuTickets />
             <span>
@@ -168,14 +168,21 @@ const Navbar = () => {
           )}
 
           {/* Mobile Menu */}
-          <div className="dropdown dropdown-end shadow-2xl lg:hidden">
-            <label tabIndex={0} className="btn btn-ghost text-2xl">
+          <div className="dropdown dropdown-end shadow-2xl  lg:hidden">
+            <label tabIndex={0} className="btn btn-ghost text-2xl ml-2">
               <HiOutlineMenuAlt3 />
             </label>
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow bg-base-100 rounded-box w-52"
             >
+              <Link
+                to="/register"
+                className="btn btn-sm bg-primary text-white hover:bg-primary/90  flex items-center gap-1"
+              >
+                <HiOutlineLogin />
+                <span className="">Register</span>
+              </Link>
               {navLinks}
               <button
                 onClick={toggleTheme}

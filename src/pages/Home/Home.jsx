@@ -7,7 +7,7 @@ import Partners from "../../components/Partners";
 
 const Home = () => {
   useEffect(() => {
-    document.title = "Home | UtilityBills";
+    document.title = "Home | UtilityBill";
   }, []);
   return (
     <div className="lg:max-w-7xl mx-auto max-w-11/12">

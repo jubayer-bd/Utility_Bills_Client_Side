@@ -12,7 +12,7 @@ const MyPayBills = () => {
   const [currentBill, setCurrentBill] = useState(null);
 
   useEffect(() => {
-    document.title = "My Pay Bills | Utility Bills";
+    document.title = "My Pay Bills | UtilityBill";
   }, []);
 
   // ✅ SweetAlert2 theme adaptation

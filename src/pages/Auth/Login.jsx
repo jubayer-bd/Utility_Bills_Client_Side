@@ -24,7 +24,7 @@ const Login = () => {
   const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
-    document.title = "Login | Utility Bills";
+    document.title = "Login | UtilityBill";
   });
   useEffect(() => {
     const timer = setTimeout(() => setPageLoading(false), 800);

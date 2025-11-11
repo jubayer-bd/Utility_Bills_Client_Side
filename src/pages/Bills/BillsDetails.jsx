@@ -12,7 +12,7 @@ const BillDetails = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.title = "Bills Details | Utility Bills";
+    document.title = "Bills Details | UtilityBill";
   }, []);
 
   // Fetch bill details
