@@ -13,7 +13,7 @@ const RecentBills = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("https://utility-bills-server-side.vercel.app/latest-bills") // fetch 6 latest bills
+      .get("https://utility-bills-server-side.vercel.app/latest-bills")
       .then((res) => setBills(res.data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
@@ -24,12 +24,12 @@ const RecentBills = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className=" mx-auto px-4 py-12"
+      className="mx-auto px-4 py-12"
     >
-      <h2 className="text-3xl font-bold text-center mb-6">
+      <h2 className="text-3xl font-bold text-center mb-6 text-base-content">
         Recently Added Bills
       </h2>
-      <p className="text-center text-gray-800 dark:text-gray-200 mb-10">
+      <p className="text-center text-base-content/70 mb-10">
         Check out the latest bills added by users.
       </p>
 
@@ -38,7 +38,7 @@ const RecentBills = () => {
           <span className="loading loading-spinner loading-lg text-primary"></span>
         </div>
       ) : bills.length === 0 ? (
-        <p className="text-center text-gray-500 dark:text-gray-300 text-lg">
+        <p className="text-center text-base-content/70 text-lg">
           No recent bills found.
         </p>
       ) : (
@@ -54,7 +54,7 @@ const RecentBills = () => {
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.05 }}
-              className="rounded-2xl shadow-md bg-white hover:shadow-xl transition overflow-hidden"
+              className="rounded-2xl shadow-md bg-base-100 text-base-content border border-base-200 hover:shadow-xl transition overflow-hidden"
             >
               <img
                 src={bill.image}
@@ -65,24 +65,25 @@ const RecentBills = () => {
                 <h3 className="text-xl font-semibold h-10 mb-4">
                   {bill.title}
                 </h3>
-                <p className="flex items-center gap-2 text-gray-600">
+
+                <p className="flex items-center gap-2 text-base-content/70">
                   <MdCategory className="text-blue-500" /> {bill.category}
                 </p>
-                <p className="flex items-center gap-2 text-gray-600">
+
+                <p className="flex items-center gap-2 text-base-content/70">
                   <FaMapMarkerAlt className="text-blue-500" /> {bill.location}
                 </p>
 
-                <p className="flex items-center gap-2 text-gray-600">
-                  <FaCalendarAlt className="text-blue-500" />
-                  {bill.date}
+                <p className="flex items-center gap-2 text-base-content/70">
+                  <FaCalendarAlt className="text-blue-500" /> {bill.date}
                 </p>
 
-                <p className="flex items-center gap-2 font-semibold text-gray-800">
+                <p className="flex items-center gap-2 font-semibold text-base-content">
                   <IoMdCash className="text-green-600" /> BDT {bill.amount}
                 </p>
 
                 <Link to={`/bills/${bill._id}`}>
-                  <button className="mt-3 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition ">
+                  <button className="mt-3 w-full btn btn-primary text-white">
                     See Details
                   </button>
                 </Link>

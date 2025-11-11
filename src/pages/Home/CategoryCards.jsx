@@ -1,59 +1,39 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router";
-import { FaBolt, FaGasPump, FaTint, FaWifi } from "react-icons/fa";
+import { FaWifi, FaBolt, FaBurn, FaTint } from "react-icons/fa";
 
 const Category = () => {
   const categories = [
     {
-      id: 1,
+      icon: <FaBolt className="text-4xl text-yellow-500 mb-2" />,
       name: "Electricity",
-      icon: <FaBolt className="text-yellow-400 text-4xl" />,
-      bg: "bg-yellow-100",
     },
+    { icon: <FaBurn className="text-4xl text-red-500 mb-2" />, name: "Gas" },
+    { icon: <FaTint className="text-4xl text-blue-500 mb-2" />, name: "Water" },
     {
-      id: 2,
-      name: "Gas",
-      icon: <FaGasPump className="text-red-400 text-4xl" />,
-      bg: "bg-red-100",
-    },
-    {
-      id: 3,
-      name: "Water",
-      icon: <FaTint className="text-blue-400 text-4xl" />,
-      bg: "bg-blue-100",
-    },
-    {
-      id: 4,
+      icon: <FaWifi className="text-4xl text-green-500 mb-2" />,
       name: "Internet",
-      icon: <FaWifi className="text-purple-400 text-4xl" />,
-      bg: "bg-purple-100",
     },
   ];
 
   return (
-    <section className="py-16 ">
-      <div className=" mx-auto px-6 text-center">
-        <h2 className="section-title text-3xl md:text-4xl font-bold text-gray-800 mb-10">
+    <section className="py-16">
+      <div className="mx-auto px-6 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-10 text-base-content">
           Categories
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 justify-center">
-          {categories.map((category) => (
+        {/* ✅ Fixed grid layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          {categories.map((cat, index) => (
             <motion.div
-              key={category.id}
+              key={index}
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
-              className={`rounded-2xl p-8 flex flex-col items-center justify-center shadow-md hover:shadow-xl bg-white border border-gray-100`}
+              className="p-8 bg-base-200 rounded-2xl flex flex-col items-center justify-center shadow-md hover:shadow-xl transition border border-base-200"
             >
-              <div
-                className={`${category.bg} w-20 h-20 rounded-full flex items-center justify-center mb-4`}
-              >
-                {category.icon}
-              </div>
-              <h3 className="section-title text-lg font-semibold text-gray-700">
-                {category.name}
-              </h3>
+              {cat.icon}
+              <p className="font-medium text-base-content">{cat.name}</p>
             </motion.div>
           ))}
         </div>

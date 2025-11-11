@@ -26,19 +26,24 @@ const WhyChooseUs = () => {
   ];
 
   return (
-    <section className=" py-14 px-6 md:px-10">
+    <section className="py-14 px-6 md:px-10">
       <h2 className="text-3xl font-bold text-center mb-10 text-[#00BFA6]">
         Why Choose Utility Bill Management?
       </h2>
+
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {features.map((f, i) => (
           <div
             key={i}
-            className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300"
+            className="bg-base-100 text-base-content border border-base-200 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300"
           >
             <div className="flex justify-center mb-4">{f.icon}</div>
-            <h3 className="text-lg font-semibold text-center mb-2">{f.title}</h3>
-            <p className="text-sm text-gray-600 text-center">{f.desc}</p>
+            <h3 className="text-lg font-semibold text-center mb-2">
+              {f.title}
+            </h3>
+            <p className="text-sm text-base-content/70 text-center">
+              {f.desc}
+            </p>
           </div>
         ))}
       </div>

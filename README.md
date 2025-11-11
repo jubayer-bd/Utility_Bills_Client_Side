@@ -7,7 +7,7 @@ A complete **full-stack web application** built with the **MERN Stack (MongoDB, 
 ## 🌐 Live Site
 
 🔗 **[Visit Live Site](https://utility-bills-cfa.netlify.app)**  
-🔗 **[Backend Server (Vercel)](https://utility-bills-server-side.vercel.app)**
+
 
 ---
 
