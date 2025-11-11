@@ -1,4 +1,4 @@
-# 🧾 Utility Bill Management System (MERN)
+# 🧾 UtilityBill 
 
 A complete **full-stack web application** built with the **MERN Stack (MongoDB, Express, React, Node.js)** that allows users to **manage, pay, and track their utility bills** from one place — all with a modern UI and smooth experience.
 
