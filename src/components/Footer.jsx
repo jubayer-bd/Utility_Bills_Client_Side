@@ -27,25 +27,19 @@ const Footer = () => {
           </p>
           <div className="flex space-x-4 mt-4 text-xl">
             <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noreferrer"
+              
               className="hover:text-blue-600"
             >
               <FaFacebook />
             </a>
             <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noreferrer"
+              
               className="hover:text-sky-500"
             >
               <FaXTwitter />
             </a>
             <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noreferrer"
+              
               className="hover:text-blue-700"
             >
               <FaLinkedin />

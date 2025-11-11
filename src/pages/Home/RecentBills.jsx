@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { MdCategory } from "react-icons/md";
 import { IoMdCash } from "react-icons/io";
 import { motion } from "framer-motion";
@@ -71,6 +71,12 @@ const RecentBills = () => {
                 <p className="flex items-center gap-2 text-gray-600">
                   <FaMapMarkerAlt className="text-blue-500" /> {bill.location}
                 </p>
+
+                <p className="flex items-center gap-2 text-gray-600">
+                  <FaCalendarAlt className="text-blue-500" />
+                  {bill.date}
+                </p>
+
                 <p className="flex items-center gap-2 font-semibold text-gray-800">
                   <IoMdCash className="text-green-600" /> BDT {bill.amount}
                 </p>

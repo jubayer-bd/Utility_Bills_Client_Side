@@ -10,28 +10,24 @@ const Category = () => {
       name: "Electricity",
       icon: <FaBolt className="text-yellow-400 text-4xl" />,
       bg: "bg-yellow-100",
-      
     },
     {
       id: 2,
       name: "Gas",
       icon: <FaGasPump className="text-red-400 text-4xl" />,
       bg: "bg-red-100",
-     
     },
     {
       id: 3,
       name: "Water",
       icon: <FaTint className="text-blue-400 text-4xl" />,
       bg: "bg-blue-100",
-      
     },
     {
       id: 4,
       name: "Internet",
       icon: <FaWifi className="text-purple-400 text-4xl" />,
       bg: "bg-purple-100",
-     
     },
   ];
 
@@ -39,7 +35,7 @@ const Category = () => {
     <section className="py-16 ">
       <div className=" mx-auto px-6 text-center">
         <h2 className="section-title text-3xl md:text-4xl font-bold text-gray-800 mb-10">
-          Browse by Category
+          Categories
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 justify-center">
@@ -58,7 +54,6 @@ const Category = () => {
               <h3 className="section-title text-lg font-semibold text-gray-700">
                 {category.name}
               </h3>
-             
             </motion.div>
           ))}
         </div>

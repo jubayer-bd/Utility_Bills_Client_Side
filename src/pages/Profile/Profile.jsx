@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../provider/AuthProvider";
 
@@ -6,6 +6,9 @@ const Profile = () => {
   const { user, updateUser, setUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  useEffect(() => {
+    document.title = "My Profile | UtilityBill";
+  }, []);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
