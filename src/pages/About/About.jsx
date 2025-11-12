@@ -91,13 +91,8 @@ const About = () => {
         </motion.div>
       </section>
 
-      {/* Footer Info */}
-      <section className="text-center mt-16">
-        <p className="text-sm text-gray-500">
-          © {new Date().getFullYear()} Utility Bill Management System. All
-          rights reserved.
-        </p>
-      </section>
+      
+     
     </div>
   );
 };
