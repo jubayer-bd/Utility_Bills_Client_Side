@@ -131,6 +131,7 @@ const AddBill = () => {
         <input
           name="date"
           type="date"
+          placeholder="Date"
           className="input input-bordered"
           required
         />

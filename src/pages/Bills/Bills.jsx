@@ -37,7 +37,7 @@ const Bills = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="max-w-7xl mx-auto px-4 py-12"
+      className="lg:max-w-7xl md:max-w-10/12 lg: max-w-11/12  mx-auto px-4 py-12"
     >
       <h2 className="text-3xl font-bold text-center mb-6 text-base-content">
         Explore All Utility Bills

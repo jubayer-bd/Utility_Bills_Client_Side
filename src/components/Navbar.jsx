@@ -8,6 +8,7 @@ import {
   MdOutlineLogin,
   MdOutlineLogout,
 } from "react-icons/md";
+import { IoPersonAddSharp } from "react-icons/io5";
 import { LuCircleUser, LuTickets } from "react-icons/lu";
 import { HiOutlineLogin, HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 
@@ -160,7 +161,7 @@ const Navbar = () => {
                 to="/register"
                 className="btn btn-sm bg-primary text-white hover:bg-primary/90 flex items-center gap-1"
               >
-                <HiOutlineLogin />
+                <IoPersonAddSharp />
                 <span>Register</span>
               </Link>
             </div>
@@ -250,7 +251,7 @@ const Navbar = () => {
                       className="btn btn-sm bg-primary text-white hover:bg-primary/90 flex items-center justify-center gap-1"
                       onClick={() => setIsDrawerOpen(false)}
                     >
-                      <HiOutlineLogin /> Register
+                      <IoPersonAddSharp /> Register
                     </Link>
                   </>
                 )}

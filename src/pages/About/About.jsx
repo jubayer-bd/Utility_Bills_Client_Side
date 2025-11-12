@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { FaBolt, FaBurn, FaTint, FaWifi } from "react-icons/fa";
-
+import { motion } from "framer-motion";
 const About = () => {
   useEffect(() => {
     document.title = "About | UtilityBill";
@@ -55,24 +55,40 @@ const About = () => {
           smarter, more organized way to handle utility expenses — reducing late
           payments and improving financial control.
         </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 justify-center">
-          <div className="p-6 bg-base-200 rounded-xl flex flex-col items-center shadow">
+        <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-6 justify-center">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+            className="shadow-md hover:shadow-xl transition p-6 bg-base-200 rounded-xl flex flex-col items-center "
+          >
             <FaBolt className="text-4xl text-yellow-500 mb-2" />
             <p className="font-medium">Electricity</p>
-          </div>
-          <div className="p-6 bg-base-200 rounded-xl flex flex-col items-center shadow">
+          </motion.div>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+            className="shadow-md hover:shadow-xl transition p-6 bg-base-200 rounded-xl flex flex-col items-center "
+          >
             <FaBurn className="text-4xl text-red-500 mb-2" />
             <p className="font-medium">Gas</p>
-          </div>
-          <div className="p-6 bg-base-200 rounded-xl flex flex-col items-center shadow">
+          </motion.div>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+            className="shadow-md hover:shadow-xl transition p-6 bg-base-200 rounded-xl flex flex-col items-center "
+          >
             <FaTint className="text-4xl text-blue-500 mb-2" />
             <p className="font-medium">Water</p>
-          </div>
-          <div className="p-6 bg-base-200 rounded-xl flex flex-col items-center shadow">
+          </motion.div>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+            className="shadow-md hover:shadow-xl transition p-6 bg-base-200 rounded-xl flex flex-col items-center "
+          >
             <FaWifi className="text-4xl text-green-500 mb-2" />
             <p className="font-medium">Internet</p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Footer Info */}
