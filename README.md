@@ -1,6 +1,7 @@
 # 🧾 UtilityBill 
 
 A complete **full-stack web application** built with the **MERN Stack (MongoDB, Express, React, Node.js)** that allows users to **manage, pay, and track their utility bills** from one place — all with a modern UI and smooth experience.
+<img src="./public/screenshot-20251119130316.png" alt="Project Screenshot" hight="50%" >
 
 ---
 
@@ -110,6 +111,35 @@ A complete **full-stack web application** built with the **MERN Stack (MongoDB, 
 - 🔔 Toasts for Success/Error Feedback
 
 - 🔒 Persistent Login State (Private Routes)
+
+---
+
+## 💻 Installation & Setup
+
+Follow these steps to run the project locally:
+
+
+```bash
+1. Clone the repository
+git clone https://github.com/jubayer-bd/Utility_Bills_Client_Side.git
+
+2. Navigate to the project directory
+cd warmpaws
+
+3. Install dependencies
+npm install
+
+4. Configure Firebase Keys
+Create a .env.local file in the root folder and add your Firebase credentials:
+VITE_apiKey=your_api_key
+VITE_authDomain=your_auth_domain
+VITE_projectId=your_project_id
+VITE_storageBucket=your_storage_bucket
+VITE_messagingSenderId=your_messaging_sender_id
+VITE_appId=your_app_id
+
+5. Start the server
+npm run dev
 
 ---
 
