@@ -1,109 +1,132 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
+import { Link } from "react-router";
 
 const Banner = () => {
   const slides = [
     {
+      // Image: Concept of finance/calculation
       image:
-        "https://i.pinimg.com/1200x/e7/4c/a9/e74ca913ea2df3765040a081a39383b5.jpg",
+        "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2072&auto=format&fit=crop",
       title: "Manage Your Electricity Bills Easily",
-      subtitle: "Track your monthly usage and payments in one place.",
-
-      textColor: "text-gray-900",
+      subtitle:
+        "Track your monthly usage and payments in one unified dashboard.",
     },
     {
+      // Image: Clear water/nature
       image:
-        "https://i.pinimg.com/1200x/bd/8f/da/bd8fda16c8142041f97b5bd8513801e6.jpg",
+        "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?q=80&w=1888&auto=format&fit=crop",
       title: "Pay Your Water Bills On Time",
-      subtitle: "Never miss a due date with automated reminders.",
-      // overlay: "from-teal-700 via-teal-500 to-teal-400", // Removed
-      textColor: "text-gray-900",
+      subtitle:
+        "Never miss a due date again with our automated reminder system.",
     },
     {
+      // Image: Gas/Kitchen flame (Abstract)
       image:
-        "https://i.pinimg.com/1200x/e5/96/27/e5962767e5f7cde915041d93ca7bb0ee.jpg",
+        "https://images.unsplash.com/photo-1667222353884-ba845e44a4f5?q=80&w=1170&auto=format&fit=crop",
       title: "Simplify Your Gas Bill Management",
-      subtitle: "View, pay, and download receipts instantly.",
-      // overlay: "from-orange-700 via-orange-500 to-orange-400", // Removed
-      textColor: "text-gray-900",
+      subtitle: "View history, pay securely, and download receipts instantly.",
     },
     {
+      // Image: Technology/Connections
       image:
-        "https://i.pinimg.com/1200x/e0/74/78/e074782ed20bcd24d1ba2982aac33b45.jpg",
+        "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop",
       title: "Internet Bills Made Simple",
-      subtitle: "Manage multiple accounts in one dashboard.",
-      // overlay: "from-purple-700 via-purple-500 to-purple-400", // Removed
-      textColor: "text-gray-900",
+      subtitle: "Manage multiple service providers from a single account.",
     },
     {
+      // Image: Modern Architecture/City
       image:
-        "https://i.pinimg.com/1200x/11/a6/41/11a6415aa0c4db82b4a0a18c089db481.jpg",
+        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
       title: "All Your Utility Bills, One Platform",
-      subtitle: "Secure, fast, and convenient bill management.",
-      // overlay: "from-gray-800 via-gray-600 to-gray-400", // Removed
-      textColor: "text-gray-900",
+      subtitle:
+        "Secure, fast, and convenient bill management for modern living.",
     },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Auto-slide every 5 seconds
+  // Auto-slide every 6 seconds (slightly slower for better reading)
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 6000);
     return () => clearInterval(interval);
   }, [slides.length]);
 
   const currentSlide = slides[currentIndex];
 
   return (
-    <section
-      className="relative h-[30vh]  md:h-[40vh] lg:h-[60vh]  flex items-center justify-center overflow-hidden transition-all duration-700 rounded-xl my-10"
-      style={{
-        backgroundImage: `url(${currentSlide.image})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      {/* Content */}
-      <motion.div
-        key={currentIndex}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -30 }}
-        transition={{ duration: 0.8 }}
-        className={`relative z-10 text-center px-6 text-gray-900 `}
-      >
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
-          <Typewriter
-            words={[currentSlide.title]}
-            loop={1}
-            cursor
-            cursorStyle="|"
-            typeSpeed={70}
-            deleteSpeed={50}
-            delaySpeed={2000}
-          />
-        </h1>
+    <section className="relative w-full h-[40vh] md:h-[60vh] lg:h-[60vh] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl mt-10 mx-auto max-w-7xl">
+      {/* Background Image Layer */}
+      <div
+        className="absolute inset-0 transition-all duration-1000 ease-in-out transform scale-105"
+        style={{
+          backgroundImage: `url(${currentSlide.image})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
 
-        <p className="text-base sm:text-lg md:text-xl mb-8 max-w-3xl mx-auto">
-          {currentSlide.subtitle}
-        </p>
-      </motion.div>
+      {/* Dark Overlay Layer - Essential for text readability */}
+      <div className="absolute inset-0 bg-black/40 bg-gradient-to-t from-black/60 via-black/50 to-transparent" />
+
+      {/* Content Layer */}
+      <div className="relative z-10 w-full px-6 md:px-12 text-center">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col items-center justify-center"
+          >
+            {/* Title */}
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white mb-4 tracking-tight drop-shadow-lg h-[80px] md:h-[100px] flex items-center justify-center">
+              <span>
+                <Typewriter
+                  words={[currentSlide.title]}
+                  loop={1}
+                  cursor
+                  cursorStyle="_"
+                  typeSpeed={50}
+                  deleteSpeed={30}
+                  delaySpeed={1000}
+                />
+              </span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-gray-200 text-base sm:text-lg md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
+              {currentSlide.subtitle}
+            </p>
+
+            {/* CTA Button */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition-colors duration-300"
+            >
+              <Link to={"/bills"}>Get Started Now</Link>
+            </motion.button>
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
       {/* Dots Indicator */}
-      <div className="absolute bottom-6 flex gap-2 z-10">
+      <div className="absolute bottom-8 flex gap-3 z-20">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-3 h-3 rounded-full ${
+            className={`h-3 rounded-full transition-all duration-300 shadow-sm ${
               index === currentIndex
-                ? "bg-white"
-                : "bg-gray-400 dark:bg-gray-600"
-            } transition`}
+                ? "w-8 bg-teal-500"
+                : "w-3 bg-gray-400/50 hover:bg-white/80"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
           ></button>
         ))}
       </div>

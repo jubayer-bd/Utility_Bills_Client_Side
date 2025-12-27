@@ -11,12 +11,12 @@ import {
 import { IoPersonAddSharp } from "react-icons/io5";
 import { LuCircleUser, LuTickets } from "react-icons/lu";
 import { HiOutlineLogin, HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
+import { User } from "lucide-react";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
@@ -92,11 +92,21 @@ const Navbar = () => {
           About
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to="/savings-tips"
+          className={({ isActive }) =>
+            isActive ? "text-primary font-semibold" : "font-medium"
+          }
+        >
+          Savings Tips
+        </NavLink>
+      </li>
     </>
   );
 
   return (
-    <div className="bg-base-100 shadow-md sticky top-0 z-50">
+    <div className="bg-base-100 shadow-sm sticky top-0 z-50">
       <div className="navbar max-w-7xl mx-auto px-4">
         {/* Left: Logo */}
         <div className="navbar-start">
@@ -135,11 +145,12 @@ const Navbar = () => {
                 data-tip={user?.displayName || "User"}
               >
                 <img
-                  src={user?.photoURL || "https://via.placeholder.com/40"}
+                  src={user?.photoURL || <User />}
                   alt="profile"
                   className="w-9 h-9 rounded-full border-2 border-primary"
                 />
               </div>
+
               <button
                 onClick={logOut}
                 className="btn btn-sm bg-error text-white hover:bg-error/80 flex items-center gap-1"

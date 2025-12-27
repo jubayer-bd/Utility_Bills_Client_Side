@@ -4,6 +4,10 @@ import Category from "./CategoryCards";
 import RecentBills from "./RecentBills";
 import WhyChooseUs from "../../components/WhyChosseUs";
 import Partners from "../../components/Partners";
+import { SavingsBanner } from "./SmartSavingTip";
+import { FeaturesSection } from "./Fetures";
+import { WorkflowSection } from "./HowItsWorks";
+import { StatsSection } from "./StatsSection";
 
 const Home = () => {
   useEffect(() => {
@@ -15,6 +19,10 @@ const Home = () => {
       <Category />
       <RecentBills />
       <WhyChooseUs />
+      <SavingsBanner />
+      <FeaturesSection />
+      <WorkflowSection />
+      <StatsSection />
       <Partners />
     </div>
   );
