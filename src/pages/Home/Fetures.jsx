@@ -24,7 +24,8 @@ export const FeaturesSection = () => {
       icon: <Smartphone />,
     },
   ];
-
+// hfjhjkfahdf?
+//  hjkhjkjkhjkhjk
   return (
     <section className="py-20">
       <div className="max-w-7xl mx-auto px-4">
