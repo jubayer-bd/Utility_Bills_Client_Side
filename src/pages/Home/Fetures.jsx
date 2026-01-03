@@ -1,4 +1,5 @@
 import { BellRing, PieChart, Lock, Smartphone } from "lucide-react";
+import toast from "react-hot-toast";
 import { Link } from "react-router";
 
 export const FeaturesSection = () => {
@@ -24,8 +25,8 @@ export const FeaturesSection = () => {
       icon: <Smartphone />,
     },
   ];
-// hfjhjkfahdf?
-//  hjkhjkjkhjkhjk
+  // hfjhjkfahdf?
+  //  hjkhjkjkhjkhjk
   return (
     <section className="py-20">
       <div className="max-w-7xl mx-auto px-4">
@@ -38,7 +39,9 @@ export const FeaturesSection = () => {
               We provide the most comprehensive tools to keep your household
               expenses under control.
             </p>
-            <Link to={'/bills'} className="btn btn-primary px-8">Get Started Now</Link>
+            <Link to={"/bills"} className="btn btn-primary px-8">
+              Get Started Now
+            </Link>
           </div>
           <div className="grid sm:grid-cols-2 s gap-6">
             {features.map((f, i) => (

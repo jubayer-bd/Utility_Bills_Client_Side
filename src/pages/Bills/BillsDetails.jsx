@@ -32,7 +32,7 @@ const BillDetails = () => {
     const currentMonth = new Date().getMonth();
     return billMonth === currentMonth;
   };
-
+console.log(bill)
   // Handle Pay Bill form submission
   const handlePayBill = (e) => {
     e.preventDefault();

@@ -11,7 +11,21 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
       <RouterProvider router={router} />
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            // border: "1px  ",
+            // padding: "10px 5px",
+            color: "#1e293b",
+          },
+          iconTheme: {
+            primary: "#3b82f6",
+            secondary: "#FFFAEE",
+          },
+        }}
+      />
     </AuthProvider>
   </StrictMode>
 );

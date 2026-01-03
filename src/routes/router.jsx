@@ -13,6 +13,7 @@ import About from "../pages/About/About";
 import Profile from "../pages/Profile/Profile";
 import ErrorPage from "../pages/Error/NotFound";
 import SavingsTips from "../pages/Savings/SavingsTips";
+import DashboardLayout from "../layout/DashBoardLayout";
 
 export const router = createBrowserRouter([
   {
@@ -30,20 +31,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "bills/:id",
-        element: (
-          <PrivateRoute>
-            {" "}
-            <BillDetails />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "add-bill",
-        element: (
-          <PrivateRoute>
-            <AddBills />
-          </PrivateRoute>
-        ),
+        element: <BillDetails />,
       },
       {
         path: "my-profile",
@@ -63,14 +51,7 @@ export const router = createBrowserRouter([
         path: "savings-tips",
         element: <SavingsTips />,
       },
-      {
-        path: "my-bills",
-        element: (
-          <PrivateRoute>
-            <MyPayBills />
-          </PrivateRoute>
-        ),
-      },
+
       {
         path: "login",
         element: <Login />,
@@ -78,6 +59,37 @@ export const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <div>DashBoard Overview</div>,
+      },
+      {
+        path: "add-bill",
+        element: <AddBills />,
+      },
+      {
+        path: "my-bills",
+        element: <MyPayBills />,
+      },
+      // Placeholders for the other sidebar links
+      {
+        path: "analytics",
+        element: <div>Analytics Coming Soon</div>,
+      },
+      {
+        path: "settings",
+        element: <div>Settings Coming Soon</div>,
       },
     ],
   },
