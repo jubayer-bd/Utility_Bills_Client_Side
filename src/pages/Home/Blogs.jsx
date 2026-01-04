@@ -1,0 +1,46 @@
+import { FileText, TrendingUp, Lightbulb } from "lucide-react";
+
+const blogs = [
+  {
+    title: "5 Ways to Reduce Your Electricity Bill",
+    icon: Lightbulb,
+  },
+  {
+    title: "How to Track Monthly Utility Expenses",
+    icon: TrendingUp,
+  },
+  {
+    title: "Smart Metering Explained",
+    icon: FileText,
+  },
+];
+
+export default function Blogs() {
+  return (
+    <section className="py-20 bg-slate-50">
+      <div className="max-w-7xl mx-auto px-6">
+        <h2 className="text-3xl font-bold text-center mb-12">
+          Smart Utility Tips & Insights
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {blogs.map((blog, i) => {
+            const Icon = blog.icon;
+            return (
+              <div
+                key={i}
+                className="bg-white p-6 rounded-2xl border hover:shadow-md transition"
+              >
+                <Icon className="w-10 h-10 text-blue-500 mb-4" />
+                <h3 className="font-semibold text-lg">{blog.title}</h3>
+                <p className="text-slate-600 mt-2">
+                  Learn practical tips to reduce costs and manage bills smarter.
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}

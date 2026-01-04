@@ -8,6 +8,10 @@ import { SavingsBanner } from "./SmartSavingTip";
 import { FeaturesSection } from "./Fetures";
 import { WorkflowSection } from "./HowItsWorks";
 import { StatsSection } from "./StatsSection";
+import FAQ from "./FAQ";
+import Testimonials from "./Testimonials";
+import Blogs from "./Blogs";
+import Newsletter from "./Newsletter";
 
 const Home = () => {
   useEffect(() => {
@@ -24,6 +28,10 @@ const Home = () => {
       <WorkflowSection />
       <StatsSection />
       <Partners />
+      <Testimonials />
+      <FAQ />
+      <Blogs />
+      <Newsletter />
     </div>
   );
 };

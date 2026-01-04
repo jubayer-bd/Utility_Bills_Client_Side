@@ -1,17 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import {
   LayoutDashboard,
   Receipt,
-  PieChart,
-  Settings,
-  MoreVertical,
-  Bell,
-  Search,
   LogOut,
   PlusCircle,
+  User,
+  MoreVertical,
+  ChevronDown,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Outlet, NavLink, useLocation, useNavigate, Link } from "react-router"; // Updated imports
+import { Outlet, NavLink, useLocation, Link } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 
 // --- Custom Logo Component ---
@@ -30,58 +28,45 @@ const LogoIcon = ({ className }) => (
     <path d="M16 13H8" />
     <path d="M16 17H8" />
     <path d="M10 9H8" />
-    <circle cx="12" cy="14" r="3" className="stroke-blue-500" />
-    <path d="M12 14l2-2" className="stroke-blue-500" />
+    <circle cx="12" cy="14" r="3" className="stroke-current" />
+    <path d="M12 14l2-2" className="stroke-current" />
   </svg>
 );
 
-// --- Navigation Data (Matched to your Router) ---
 const NAV_ITEMS = [
-  {
-    path: "/dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-    end: true,
-  },
-  {
-    path: "/dashboard/my-bills",
-    label: "My Bills",
-    icon: Receipt,
-  },
-  {
-    path: "/dashboard/add-bill",
-    label: "Add Bill",
-    icon: PlusCircle,
-  },
-  {
-    path: "/dashboard/analytics",
-    label: "Analytics",
-    icon: PieChart,
-  },
-  {
-    path: "/dashboard/settings",
-    label: "Settings",
-    icon: Settings,
-  },
+  { path: "/dashboard", label: "Dashboard", icon: LayoutDashboard, end: true },
+  { path: "/dashboard/my-bills", label: "My Bills", icon: Receipt },
+  { path: "/dashboard/add-bill", label: "Add Bill", icon: PlusCircle },
+  { path: "/dashboard/my-profile", label: "Profile", icon: User },
 ];
 
 const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const [isProfileOpen, setIsProfileOpen] = useState(false); // Dropdown State
+  const profileRef = useRef(null);
 
-  // Determine current page title based on URL
+  const location = useLocation();
+  const { user, logOut } = useContext(AuthContext);
+
   const currentPath = NAV_ITEMS.find(
     (item) =>
       item.path === location.pathname ||
       (item.end && location.pathname === "/dashboard")
   );
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setIsProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const handleLogout = () => {
-    // Add your logout logic here (e.g., clear tokens)
-    console.log("Logging out...");
-    navigate("/login");
+    logOut();
   };
 
   // Animation variants
@@ -96,27 +81,27 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50 text-gray-900 font-sans overflow-hidden">
+    // Replaced bg-gray-50 with bg-base-200 for theme support
+    <div className="flex h-screen bg-base-200 text-base-content font-sans overflow-hidden transition-colors duration-300">
       {/* --- Sidebar --- */}
       <motion.aside
         initial="expanded"
         animate={isSidebarOpen ? "expanded" : "collapsed"}
         variants={sidebarVariants}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="h-full bg-white border-r border-gray-200 shadow-sm flex flex-col justify-between relative z-20"
+        className="h-full bg-base-100 border-r border-base-300 shadow-sm flex flex-col justify-between relative z-20"
       >
         {/* Sidebar Header */}
         <div className="p-4 flex items-center h-20">
           <div className="flex items-center gap-3 overflow-hidden whitespace-nowrap">
-            <div className="bg-blue-50 p-2 rounded-lg shrink-0">
-              <LogoIcon className="w-8 h-8 text-blue-500" />
+            <div className="bg-primary/10 p-2 rounded-lg shrink-0">
+              <LogoIcon className="w-8 h-8 text-primary" />
             </div>
             <Link to={"/"}>
-              {" "}
               <motion.span
                 variants={textVariants}
                 transition={{ duration: 0.2 }}
-                className="font-bold text-xl tracking-tight text-gray-800"
+                className="font-bold text-xl tracking-tight text-base-content"
               >
                 Utility Bills
               </motion.span>
@@ -124,11 +109,10 @@ const DashboardLayout = () => {
           </div>
         </div>
 
-        {/* Toggle Button */}
+        {/* Sidebar Toggle Button */}
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="absolute top-6 -right-3 bg-white border border-gray-200 rounded-full p-1 shadow-md hover:bg-gray-50 text-gray-500 z-30"
-          title={isSidebarOpen ? "Collapse" : "Expand"}
+          className="absolute top-6 -right-3 bg-base-100 border border-base-300 rounded-full p-1 shadow-md hover:bg-base-200 text-base-content/70 z-30"
         >
           <MoreVertical size={16} />
         </button>
@@ -139,18 +123,17 @@ const DashboardLayout = () => {
             <NavLink
               key={item.path}
               to={item.path}
-              end={item.end} // Ensures exact match for root dashboard path
+              end={item.end}
               className={({ isActive }) => `
                 w-full flex items-center gap-4 p-3 rounded-xl transition-all duration-200 group relative
                 ${
                   isActive
-                    ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
-                    : "text-gray-500 hover:bg-gray-100 hover:text-blue-500"
+                    ? "bg-primary text-primary-content shadow-lg shadow-primary/30"
+                    : "text-base-content/60 hover:bg-base-200 hover:text-primary"
                 }
               `}
             >
               <item.icon size={22} className="shrink-0" />
-
               <motion.span
                 variants={textVariants}
                 transition={{ duration: 0.2 }}
@@ -161,7 +144,7 @@ const DashboardLayout = () => {
 
               {/* Tooltip for collapsed state */}
               {!isSidebarOpen && (
-                <div className="absolute left-14 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 whitespace-nowrap">
+                <div className="absolute left-14 bg-neutral text-neutral-content text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 whitespace-nowrap">
                   {item.label}
                 </div>
               )}
@@ -169,11 +152,11 @@ const DashboardLayout = () => {
           ))}
         </nav>
 
-        {/* Logout Section */}
-        <div className="p-3 border-t border-gray-100">
+        {/* Logout (Sidebar Bottom) */}
+        <div className="p-3 border-t border-base-300">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-4 p-3 rounded-xl text-red-500 hover:bg-red-50 transition-colors"
+            className="w-full flex items-center gap-4 p-3 rounded-xl text-error hover:bg-error/10 transition-colors"
           >
             <LogOut size={22} className="shrink-0" />
             <motion.span variants={textVariants} className="font-medium">
@@ -186,48 +169,93 @@ const DashboardLayout = () => {
       {/* --- Main Content Area --- */}
       <main className="flex-1 flex flex-col h-full overflow-hidden">
         {/* Navbar */}
-        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-8 z-10">
-          {/* Left: Page Title / Search */}
+        <header className="h-20 bg-base-100/80 backdrop-blur-md border-b border-base-300 flex items-center justify-between px-8 z-10">
           <div className="flex items-center gap-4">
-            <h1 className="text-2xl font-bold text-gray-800 capitalize">
+            <h1 className="text-2xl font-bold text-base-content capitalize">
               {currentPath?.label || "Overview"}
             </h1>
-            <div className="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 ml-6">
-              <Search size={18} className="text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search bills..."
-                className="bg-transparent border-none outline-none text-sm ml-2 w-48 text-gray-700 placeholder:text-gray-400"
-              />
-            </div>
           </div>
 
-          {/* Right: User Profile & Actions */}
+          {/* Right: User Profile Dropdown */}
           <div className="flex items-center gap-6">
-            <button className="relative p-2 text-gray-400 hover:text-blue-500 transition-colors">
-              <Bell size={20} />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-            </button>
+            <div className="h-8 w-px bg-base-300"></div>
 
-            <div className="h-8 w-px bg-gray-200"></div>
-
-            <div className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-              <div className="text-right hidden md:block">
-                <p className="text-sm font-semibold text-gray-700">
-                  {user?.displayName || "John Doe"}
-                </p>
-                <p className="text-xs text-gray-500">Premium User</p>
+            {/* Profile Dropdown Container */}
+            <div className="relative" ref={profileRef}>
+              <div
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity"
+              >
+                <div className="text-right hidden md:block">
+                  <p className="text-sm font-semibold text-base-content">
+                    {user?.displayName || "User"}
+                  </p>
+                  <p className="text-xs text-base-content/60">Member</p>
+                </div>
+                <img
+                  src={user?.photoURL || "https://i.pravatar.cc/300"}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full border-2 border-base-200 object-cover shadow-sm"
+                />
+                <ChevronDown
+                  size={16}
+                  className={`text-base-content/50 transition-transform ${
+                    isProfileOpen ? "rotate-180" : ""
+                  }`}
+                />
               </div>
-              <img
-                src={user?.photoURL || "https://i.pravatar.cc/300"}
-                alt="User Profile"
-                className="w-10 h-10 rounded-full border-2 border-blue-100 object-cover shadow-sm"
-              />
+
+              {/* Dropdown Menu */}
+              <AnimatePresence>
+                {isProfileOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    className="absolute right-0 mt-3 w-56 bg-base-100 border border-base-200 rounded-xl shadow-xl py-2 z-50 origin-top-right"
+                  >
+                    <div className="px-4 py-3 border-b border-base-200">
+                      <p className="text-sm font-bold text-base-content truncate">
+                        {user?.displayName}
+                      </p>
+                      <p className="text-xs text-base-content/60 truncate">
+                        {user?.email}
+                      </p>
+                    </div>
+
+                    <div className="p-1">
+                      <Link
+                        to="/dashboard/my-profile"
+                        onClick={() => setIsProfileOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 text-sm text-base-content/80 hover:bg-base-200 rounded-lg transition-colors"
+                      >
+                        <User size={16} /> Profile
+                      </Link>
+                      <Link
+                        to="/dashboard/settings"
+                        onClick={() => setIsProfileOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 text-sm text-base-content/80 hover:bg-base-200 rounded-lg transition-colors"
+                      >
+                        <LayoutDashboard size={16} /> Dashboard
+                      </Link>
+                    </div>
+
+                    <div className="p-1 border-t border-base-200">
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-error hover:bg-error/10 rounded-lg transition-colors"
+                      >
+                        <LogOut size={16} /> Logout
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </header>
 
-        {/* Dynamic Content Display */}
+        {/* Content Render */}
         <div className="flex-1 overflow-y-auto p-8 relative">
           <AnimatePresence mode="wait">
             <motion.div

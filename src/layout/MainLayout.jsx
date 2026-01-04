@@ -40,7 +40,7 @@ const MainLayout = () => {
   return (
     <div className="flex flex-col min-h-screen" ref={mainRef}>
       <Navbar />
-      <main className="flex-1 page-transition overflow-hidden">
+      <main className=" flex-1 page-transition overflow-hidden">
         <Outlet />
       </main>
       <Footer />

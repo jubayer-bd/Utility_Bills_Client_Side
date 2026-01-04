@@ -14,6 +14,7 @@ import Profile from "../pages/Profile/Profile";
 import ErrorPage from "../pages/Error/NotFound";
 import SavingsTips from "../pages/Savings/SavingsTips";
 import DashboardLayout from "../layout/DashBoardLayout";
+import DashboardOverview from "../pages/Dashboard/DashboardOverview";
 
 export const router = createBrowserRouter([
   {
@@ -32,14 +33,6 @@ export const router = createBrowserRouter([
       {
         path: "bills/:id",
         element: <BillDetails />,
-      },
-      {
-        path: "my-profile",
-        element: (
-          <PrivateRoute>
-            <Profile />
-          </PrivateRoute>
-        ),
       },
 
       {
@@ -72,7 +65,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <div>DashBoard Overview</div>,
+        element: <DashboardOverview />,
       },
       {
         path: "add-bill",
@@ -90,6 +83,10 @@ export const router = createBrowserRouter([
       {
         path: "settings",
         element: <div>Settings Coming Soon</div>,
+      },
+      {
+        path: "my-profile",
+        element: <Profile />,
       },
     ],
   },

@@ -97,6 +97,36 @@ const Navbar = () => {
         >
           Bills
         </NavLink>
+        {user && (
+          <>
+            <NavLink
+              to="/dashboard/my-bills"
+              className={({ isActive }) =>
+                `px-3 py-2 rounded-lg transition-colors duration-200 ${
+                  isActive
+                    ? "text-primary font-bold bg-primary/10"
+                    : "font-medium hover:text-primary"
+                }`
+              }
+            >
+              {" "}
+              My Bills
+            </NavLink>
+            <NavLink
+              to="/dashboard/add-bill"
+              className={({ isActive }) =>
+                `px-3 py-2 rounded-lg transition-colors duration-200 ${
+                  isActive
+                    ? "text-primary font-bold bg-primary/10"
+                    : "font-medium hover:text-primary"
+                }`
+              }
+            >
+              {" "}
+              Add Bill
+            </NavLink>
+          </>
+        )}
       </li>
 
       {/* Links that are usually hidden in desktop navbar if not in dropdown, 
@@ -133,7 +163,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="bg-base-100/80 backdrop-blur-md border-b border-base-200 sticky top-0 z-50">
+    <div className="bg-base-100/80 backdrop-blur-md border-b shadow-sm border-base-200 sticky top-0 z-50">
       <div className="navbar max-w-7xl mx-auto px-4 h-20">
         {/* Left: Logo */}
         <div className="navbar-start">
@@ -220,7 +250,7 @@ const Navbar = () => {
                       </Link>
 
                       <Link
-                        to="/my-profile"
+                        to="/dashboard/my-profile"
                         onClick={() => setIsProfileOpen(false)}
                         className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-base-content/80 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors"
                       >
@@ -255,7 +285,7 @@ const Navbar = () => {
             <div className="hidden lg:flex gap-3">
               <Link
                 to="/login"
-                className="btn btn-sm px-6 btn-ghost hover:bg-base-200 font-semibold"
+                className="btn btn-sm px-6    text-primary  shadow-primary/30 "
               >
                 Login
               </Link>
