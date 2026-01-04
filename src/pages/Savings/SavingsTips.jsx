@@ -89,7 +89,7 @@ const itemVariants = {
 
 export default function SavingsTips() {
   return (
-    <section className="py-20  overflow-hidden">
+    <section className="py-20 bg-base-100 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header Section */}
         <div className="text-center mb-16 relative z-10">
@@ -110,7 +110,7 @@ export default function SavingsTips() {
                 Maximize Savings
               </span>
             </h2>
-            <p className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-4 text-lg text-base-content/60 max-w-2xl mx-auto leading-relaxed">
               Small changes in your daily routine can lead to massive reductions
               in your monthly utility bills. Explore our expert-recommended tips
               below.
@@ -133,7 +133,7 @@ export default function SavingsTips() {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="group relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl border border-slate-100 transition-all duration-300"
+                className="group relative bg-base-200 rounded-2xl p-8 shadow-sm hover:shadow-2xl border border-base-300 transition-all duration-300"
               >
                 {/* Decorative Top Border */}
                 <div
@@ -148,7 +148,7 @@ export default function SavingsTips() {
                     <Icon size={28} strokeWidth={1.5} />
                   </div>
                   <span
-                    className={`text-xs font-bold px-2 py-1 rounded bg-slate-100 text-slate-500 uppercase tracking-wider`}
+                    className={`text-xs font-bold px-2 py-1 rounded bg-base-300 text-base-content uppercase tracking-wider`}
                   >
                     {tip.category}
                   </span>
@@ -173,12 +173,7 @@ export default function SavingsTips() {
                   >
                     {tip.impact}
                   </span>
-                  <motion.div
-                    whileHover={{ x: 5 }}
-                    className={`text-${PRIMARY_COLOR}-600 cursor-pointer`}
-                  >
-                    <ArrowRight size={18} />
-                  </motion.div>
+                
                 </div>
               </motion.div>
             );
@@ -186,7 +181,7 @@ export default function SavingsTips() {
         </motion.div>
 
         {/* Bottom CTA (Optional) */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
@@ -197,7 +192,7 @@ export default function SavingsTips() {
           >
             Calculate Your Potential Savings
           </button>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

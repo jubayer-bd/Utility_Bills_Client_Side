@@ -23,9 +23,9 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="py-20 bg-slate-50">
+    <section className="py-20 bg-base-100">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-12">
+        <h2 className="text-3xl font-bold text-center mb-12 text-base-content">
           What Our Users Say
         </h2>
 
@@ -33,21 +33,33 @@ export default function Testimonials() {
           {testimonials.map((item, i) => (
             <div
               key={i}
-              className="bg-white p-6 rounded-2xl shadow-sm border hover:shadow-md transition"
+              className="
+            bg-base-200 
+            p-6 
+            rounded-2xl 
+            border border-base-300 
+            hover:shadow-lg 
+            transition
+          "
             >
-              <Quote className="w-8 h-8 text-blue-500 mb-4" />
+              {/* Quote Icon */}
+              <Quote className="w-8 h-8 text-primary mb-4" />
 
-              <p className="text-slate-600 mb-4">{item.message}</p>
+              {/* Message */}
+              <p className="text-base-content/70 mb-4">{item.message}</p>
 
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="font-semibold">{item.name}</h4>
-                  <span className="text-sm text-green-600">
+                  <h4 className="font-semibold text-base-content">
+                    {item.name}
+                  </h4>
+                  <span className="text-sm text-success">
                     Saves {item.savings}
                   </span>
                 </div>
 
-                <div className="flex text-blue-500">
+                {/* Stars */}
+                <div className="flex text-primary">
                   {[...Array(5)].map((_, idx) => (
                     <Star key={idx} size={16} fill="currentColor" />
                   ))}

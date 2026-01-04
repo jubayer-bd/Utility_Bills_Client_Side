@@ -6,13 +6,13 @@ const About = () => {
     document.title = "About | UtilityBill";
   }, []);
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12 space-y-16">
+    <div className="max-w-6xl bg-base-100 mx-auto px-4 py-12 space-y-16">
       {/* Header Section */}
       <section className="text-center">
         <h1 className="text-4xl font-bold mb-4">
           About Utility Bill Management System
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-lg text-base-content max-w-2xl mx-auto">
           The Utility Bill Management System helps users easily manage, track,
           and pay their essential utility bills like Electricity, Gas, Water,
           and Internet — all in one secure platform.
@@ -32,13 +32,13 @@ const About = () => {
           <h2 className="text-3xl font-semibold mb-4">
             Why Choose Our System?
           </h2>
-          <p className="text-gray-600 mb-3">
+          <p className="text-base-content mb-3">
             Managing monthly bills can be stressful and time-consuming. Our
             system simplifies the process by centralizing all your utility bills
             in one dashboard — making it easier to track payments, view previous
             bills, and generate reports.
           </p>
-          <ul className="list-disc list-inside text-gray-700 space-y-1">
+          <ul className="list-disc list-inside text-base-content/60 space-y-1">
             <li>Quick and secure bill payments</li>
             <li>Centralized view of all utilities</li>
             <li>Automatic total calculation and PDF download</li>
@@ -50,7 +50,7 @@ const About = () => {
       {/* Mission Section */}
       <section className="text-center">
         <h2 className="text-3xl font-semibold mb-6">Our Mission</h2>
-        <p className="text-gray-600 max-w-3xl mx-auto mb-8">
+        <p className="text-base-content/60 max-w-3xl mx-auto mb-8">
           Our goal is to empower households and businesses by providing a
           smarter, more organized way to handle utility expenses — reducing late
           payments and improving financial control.

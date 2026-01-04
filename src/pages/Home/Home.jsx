@@ -27,11 +27,11 @@ const Home = () => {
       <FeaturesSection />
       <WorkflowSection />
       <StatsSection />
-      <Partners />
       <Testimonials />
       <FAQ />
       <Blogs />
       <Newsletter />
+      <Partners />
     </div>
   );
 };

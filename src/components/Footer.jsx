@@ -8,6 +8,7 @@ import {
   HiOutlinePhone,
   HiOutlineLocationMarker,
 } from "react-icons/hi";
+import { ReceiptText } from "lucide-react";
 
 // --- Configuration ---
 const SOCIAL_LINKS = [
@@ -46,15 +47,12 @@ export default function Footer() {
         >
           {/* --- Brand Section --- */}
           <motion.div variants={itemVariants} className="space-y-6">
-            <Link
-              to="/"
-              className="flex items-center gap-2 text-2xl font-bold text-white group"
-            >
-              <div className="p-2 bg-indigo-600 rounded-lg text-white group-hover:bg-indigo-500 transition-colors">
-                <LuTickets size={24} />
+            <Link to="/" className="flex items-center gap-2 group">
+              <div className="p-2 bg-primary rounded-xl text-primary-content transition-transform group-hover:scale-110">
+                <ReceiptText size={24} />
               </div>
-              <span>
-                Utility<span className="text-indigo-400">Bill</span>
+              <span className="text-xl font-bold tracking-tight">
+                Utility<span className="text-primary">Bill</span>
               </span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs">

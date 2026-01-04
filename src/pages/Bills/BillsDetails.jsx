@@ -28,11 +28,13 @@ const BillDetails = () => {
   // Check if bill belongs to current month
   const isCurrentMonth = () => {
     if (!bill.date) return false;
-    const billMonth = new Date(bill.date).getMonth();
+    const date = parseInt(bill.date);
+    console.log(date);
+    const billMonth = new Date(date).getMonth();
     const currentMonth = new Date().getMonth();
     return billMonth === currentMonth;
   };
-console.log(bill)
+  console.log(bill);
   // Handle Pay Bill form submission
   const handlePayBill = (e) => {
     e.preventDefault();
@@ -91,7 +93,7 @@ console.log(bill)
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4 }}
-          className="max-w-4xl mx-auto shadow-lg  rounded-2xl overflow-hidden"
+          className="max-w-4xl mx-auto shadow-md bg-base-200  rounded-2xl overflow-hidden"
         >
           <img
             src={bill.image}
@@ -122,7 +124,7 @@ console.log(bill)
               <button
                 disabled={!isCurrentMonth()}
                 onClick={() => setShowModal(true)}
-                className={`px-6 py-2 rounded-lg text-white font-medium ${
+                className={`px-6 py-2 rounded-lg text-base-content font-medium ${
                   isCurrentMonth()
                     ? "bg-green-600 hover:bg-green-700"
                     : "bg-gray-400 cursor-not-allowed"
@@ -148,78 +150,76 @@ console.log(bill)
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-          // ✅ backdrop adjusts with theme
-          className="fixed inset-0 bg-gray-900/60 dark:bg-black/70 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
         >
           <motion.div
-            initial={{ scale: 0.8 }}
+            initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
-            transition={{ duration: 0.3 }}
-            // ✅ modal bg + text color
-            className="p-6 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 shadow-2xl rounded-2xl w-96 relative"
+            className="
+        w-96 p-6 rounded-2xl
+        bg-base-100
+        border border-base-300
+        text-base-content
+        shadow-2xl
+        relative
+      "
           >
             <button
-              className="absolute top-3 right-3 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               onClick={() => setShowModal(false)}
+              className="absolute top-3 right-3 text-base-content/50 hover:text-base-content"
             >
               ✕
             </button>
 
-            <h3 className="text-xl font-semibold mb-4 text-center">
-              Pay Bill Form
-            </h3>
+            <h3 className="text-xl font-semibold mb-4 text-center">Pay Bill</h3>
 
             <form onSubmit={handlePayBill} className="space-y-3">
+              {[
+                { value: user?.email },
+                { value: bill._id },
+                { value: bill.amount },
+              ].map((item, i) => (
+                <input
+                  key={i}
+                  value={item.value || ""}
+                  readOnly
+                  className="
+              w-full p-2 rounded-lg
+              bg-base-200
+              border border-base-300
+            "
+                />
+              ))}
+
               <input
-                type="email"
-                value={user?.email || ""}
-                readOnly
-                className="w-full border rounded-lg p-2 bg-gray-100 dark:bg-gray-700 dark:border-gray-600"
-              />
-              <input
-                type="text"
-                value={bill._id}
-                readOnly
-                className="w-full border rounded-lg p-2 bg-gray-100 dark:bg-gray-700 dark:border-gray-600"
-              />
-              <input
-                type="number"
-                value={bill.amount}
-                readOnly
-                className="w-full border rounded-lg p-2 bg-gray-100 dark:bg-gray-700 dark:border-gray-600"
-              />
-              <input
-                type="text"
                 name="username"
-                placeholder="Enter your name"
+                placeholder="Your name"
                 required
-                className="w-full border rounded-lg p-2 bg-gray-50 dark:bg-gray-800 dark:border-gray-600"
+                className="input input-bordered w-full"
               />
+
               <input
-                type="text"
                 name="address"
                 placeholder="Address"
                 required
-                className="w-full border rounded-lg p-2 bg-gray-50 dark:bg-gray-800 dark:border-gray-600"
+                className="input input-bordered w-full"
               />
+
               <input
-                type="tel"
                 name="phone"
                 placeholder="Phone number"
                 required
-                className="w-full border rounded-lg p-2 bg-gray-50 dark:bg-gray-800 dark:border-gray-600"
+                className="input input-bordered w-full"
               />
+
               <textarea
                 name="additional"
                 placeholder="Additional info (optional)"
                 rows="2"
-                className="w-full border rounded-lg p-2 bg-gray-50 dark:bg-gray-800 dark:border-gray-600"
-              ></textarea>
-              <button
-                type="submit"
-                className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
-              >
+                className="textarea textarea-bordered w-full"
+              />
+
+              <button type="submit" className="btn btn-primary w-full">
                 Confirm Payment
               </button>
             </form>

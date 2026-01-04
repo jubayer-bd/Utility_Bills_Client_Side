@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
-import { Link } from "react-router"; 
-import { FiChevronLeft, FiChevronRight, FiChevronsDown } from "react-icons/fi"; 
+import { Link } from "react-router";
+import { FiChevronLeft, FiChevronRight, FiChevronsDown } from "react-icons/fi";
 
 const Banner = () => {
   const slides = [
@@ -65,7 +65,7 @@ const Banner = () => {
 
   return (
     <section
-      className="relative w-full h-[50vh] md:h-[60vh] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl mt-6 mx-auto max-w-[95%] lg:max-w-7xl"
+      className="relative w-full h-[43vh] md:h-[50vh] lg:h-[60vh] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl mt-6 mx-auto max-w-[95%] lg:max-w-7xl"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
