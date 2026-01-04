@@ -381,7 +381,7 @@ const Navbar = () => {
               </div>
 
               {/* 3. Footer: Stays at the bottom */}
-              <div className="p-6 border-t border-base-200 bg-base-100 ">
+              <div className="p-6 border-t border-base-200 -mt-10 bg-base-100 ">
                 {user ? (
                   <button
                     onClick={handleLogout}
