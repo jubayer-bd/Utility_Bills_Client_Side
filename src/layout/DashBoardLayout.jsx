@@ -5,13 +5,12 @@ import {
   LogOut,
   PlusCircle,
   User,
-  MoreVertical,
   ChevronDown,
   Menu,
   X,
-  Sun, // Added for theme toggle
+  Sun,
   Moon,
-  ReceiptText, // Added for theme toggle
+  ReceiptText,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Outlet, NavLink, useLocation, Link } from "react-router";
@@ -25,30 +24,130 @@ const NAV_ITEMS = [
   { path: "/dashboard/my-profile", label: "Profile", icon: User },
 ];
 
+/* ------------------ VARIANTS ------------------ */
+const sidebarVariants = {
+  open: { width: 260, transition: { type: "spring", damping: 20 } },
+  closed: { width: 80, transition: { type: "spring", damping: 20 } },
+};
+
+const textVariants = {
+  open: { opacity: 1, x: 0, display: "block", transition: { delay: 0.1 } },
+  closed: { opacity: 0, x: -10, transitionEnd: { display: "none" } },
+};
+
+/* ------------------ SUB-COMPONENTS ------------------ */
+
+// Extracted to prevent re-renders and preserve animation state
+const SidebarContent = ({ isCollapsed, handleLogout, closeMobileMenu }) => {
+  // If isCollapsed is true, we hide text (Desktop closed state)
+  // On Mobile, we usually want the menu fully distinct, so we treat it as "open"
+  const animateState = isCollapsed ? "closed" : "open";
+
+  return (
+    <div className="flex flex-col h-full">
+      {/* Logo Section */}
+      <div className="h-20 flex items-center px-6 border-b border-base-300/50">
+        <Link 
+            to="/" 
+            className="flex items-center gap-3 overflow-hidden"
+            onClick={closeMobileMenu}
+        >
+          <div className="bg-primary p-2 rounded-lg flex-shrink-0 text-primary-content">
+            <ReceiptText size={24} />
+          </div>
+          <motion.span
+            variants={textVariants}
+            initial={animateState}
+            animate={animateState}
+            className="font-bold text-xl whitespace-nowrap tracking-tight text-base-content"
+          >
+            Utility<span className="text-primary">Bill</span>
+          </motion.span>
+        </Link>
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto overflow-x-hidden scrollbar-hide">
+        {NAV_ITEMS.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            end={item.end}
+            onClick={closeMobileMenu}
+            className={({ isActive }) =>
+              `flex items-center gap-3 p-3 rounded-xl transition-all duration-200 group relative overflow-hidden whitespace-nowrap ${
+                isActive
+                  ? "bg-primary text-primary-content shadow-lg shadow-primary/20"
+                  : "hover:bg-base-300/50 text-base-content/70 hover:text-base-content"
+              }`
+            }
+          >
+            <div className="flex-shrink-0">
+              <item.icon size={22} />
+            </div>
+            <motion.span
+              variants={textVariants}
+              initial={animateState}
+              animate={animateState}
+              className="font-medium text-sm"
+            >
+              {item.label}
+            </motion.span>
+            
+            {/* Tooltip for collapsed state (Desktop only) */}
+            {isCollapsed && (
+               <div className="absolute left-14 bg-base-300 text-base-content text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 whitespace-nowrap shadow-sm border border-base-200">
+                 {item.label}
+               </div>
+            )}
+          </NavLink>
+        ))}
+      </nav>
+
+      {/* Logout Footer */}
+      <div className="p-4 border-t border-base-300/50">
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-3 w-full p-3 rounded-xl text-error hover:bg-error/10 transition-colors overflow-hidden whitespace-nowrap group"
+        >
+          <div className="flex-shrink-0">
+            <LogOut size={22} />
+          </div>
+          <motion.span
+            variants={textVariants}
+            initial={animateState}
+            animate={animateState}
+            className="font-medium text-sm"
+          >
+            Logout
+          </motion.span>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+/* ------------------ MAIN LAYOUT ------------------ */
 const DashboardLayout = () => {
   const { user, logOut } = useContext(AuthContext);
   const location = useLocation();
 
-  // 1. Theme State Logic (Senior Tip: Keep this in a Context Provider for a real app)
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Desktop Toggle
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false); // Mobile Toggle
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const profileRef = useRef(null);
 
-  // 2. Sync theme with document attribute on mount and change
   useEffect(() => {
     const root = window.document.documentElement;
     root.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
+  const toggleTheme = () => setTheme((prev) => (prev === "light" ? "dark" : "light"));
 
-  /* Close profile dropdown on outside click */
+  // Close profile dropdown on outside click
   useEffect(() => {
     const handler = (e) => {
       if (profileRef.current && !profileRef.current.contains(e.target)) {
@@ -60,102 +159,40 @@ const DashboardLayout = () => {
   }, []);
 
   const currentPath = NAV_ITEMS.find(
-    (item) =>
-      item.path === location.pathname ||
-      (item.end && location.pathname === "/dashboard")
+    (item) => item.path === location.pathname || (item.end && location.pathname === "/dashboard")
   );
 
-  const handleLogout = () => logOut();
-
-  /* ------------------ SIDEBAR VARIANTS ------------------ */
-  const sidebarVariants = {
-    open: { width: 260 },
-    closed: { width: 80 },
+  const handleLogout = () => {
+      logOut();
+      setIsMobileSidebarOpen(false);
   };
-
-  const textVariants = {
-    open: { opacity: 1, x: 0, display: "block" },
-    closed: { opacity: 0, x: -10, transitionEnd: { display: "none" } },
-  };
-
-  /* ------------------ SIDEBAR CONTENT ------------------ */
-  const SidebarContent = () => (
-    <>
-      <div className="p-4 h-20 flex items-center gap-3">
-        <Link to="/" className="flex items-center gap-3">
-          <div className="bg-primary p-2 rounded-lg">
-            <ReceiptText className="text-primary-content" size={20} />
-          </div>
-          <motion.span
-            variants={textVariants}
-            className="font-bold text-lg whitespace-nowrap tracking-tight"
-          >
-            Utility<span className="text-primary">Bill</span>
-          </motion.span>
-        </Link>
-      </div>
-
-      <nav className="flex-1 px-3 py-4 space-y-1">
-        {NAV_ITEMS.map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            end={item.end}
-            onClick={() => setIsMobileSidebarOpen(false)}
-            className={({ isActive }) =>
-              `flex items-center gap-4 p-3 rounded-xl transition-all duration-200 ${
-                isActive
-                  ? "bg-primary text-primary-content shadow-md shadow-primary/20"
-                  : "hover:bg-base-200 text-base-content/70 hover:text-base-content"
-              }`
-            }
-          >
-            <item.icon size={20} />
-            <motion.span
-              variants={textVariants}
-              className="font-medium text-sm"
-            >
-              {item.label}
-            </motion.span>
-          </NavLink>
-        ))}
-      </nav>
-
-      <div className="p-3 border-t border-base-300">
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-4 w-full p-3 rounded-xl text-error hover:bg-error/10 transition-colors"
-        >
-          <LogOut size={20} />
-          <motion.span variants={textVariants} className="font-medium text-sm">
-            Logout
-          </motion.span>
-        </button>
-      </div>
-    </>
-  );
 
   return (
-    <div className="flex h-screen bg-base-200 overflow-hidden text-base-content transition-colors duration-300">
-      {/* -------- DESKTOP SIDEBAR -------- */}
+    <div className="flex h-screen w-full bg-base-200 overflow-hidden text-base-content transition-colors duration-300 font-sans">
+      
+      {/* -------- DESKTOP SIDEBAR (Hidden on Mobile) -------- */}
       <motion.aside
         variants={sidebarVariants}
         animate={isSidebarOpen ? "open" : "closed"}
-        className="hidden lg:flex flex-col bg-base-100 border-r border-base-300 shadow-sm relative z-50"
+        className="hidden md:flex flex-col bg-base-100 border-r border-base-300 shadow-xl z-30 relative h-full flex-shrink-0"
       >
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="absolute top-7 -right-3 bg-base-100 border border-base-300 rounded-full p-1 shadow-md hover:scale-110 transition-transform z-50"
+          className="absolute top-8 -right-3 bg-base-100 border border-base-300 text-base-content rounded-full p-1.5 shadow-md hover:shadow-lg transition-all z-40 hover:scale-105"
         >
-          <motion.div animate={{ rotate: isSidebarOpen ? 0 : 180 }}>
+          <motion.div animate={{ rotate: isSidebarOpen ? 0 : 180 }} transition={{ duration: 0.3 }}>
             <ChevronDown size={14} className="-rotate-90" />
           </motion.div>
         </button>
 
-        <SidebarContent />
+        {/* Desktop passes the collapsed state */}
+        <SidebarContent 
+            isCollapsed={!isSidebarOpen} 
+            handleLogout={handleLogout} 
+        />
       </motion.aside>
 
-      {/* -------- MOBILE SIDEBAR -------- */}
+      {/* -------- MOBILE SIDEBAR OVERLAY -------- */}
       <AnimatePresence>
         {isMobileSidebarOpen && (
           <>
@@ -164,80 +201,77 @@ const DashboardLayout = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileSidebarOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] lg:hidden"
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 md:hidden"
             />
-
             <motion.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed top-0 left-0 h-full w-[280px] bg-base-100 z-[70] flex flex-col shadow-2xl"
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-0 left-0 h-full w-[80vw] max-w-[300px] bg-base-100 z-50 flex flex-col shadow-2xl md:hidden"
             >
-              <div className="flex justify-between items-center p-6 border-b border-base-300">
-                <span className="font-bold text-xl tracking-tight text-primary">
-                  Menu
-                </span>
-                <button
+              <div className="absolute top-4 right-4 z-50">
+                 <button
                   onClick={() => setIsMobileSidebarOpen(false)}
-                  className="p-2 rounded-full hover:bg-base-200"
+                  className="p-2 rounded-full hover:bg-base-200 transition-colors"
                 >
                   <X size={20} />
                 </button>
               </div>
-
-              <div className="flex-1 overflow-y-auto">
-                <SidebarContent />
-              </div>
+              
+              {/* Mobile is always "expanded" internally */}
+              <SidebarContent 
+                isCollapsed={false} 
+                handleLogout={handleLogout} 
+                closeMobileMenu={() => setIsMobileSidebarOpen(false)}
+              />
             </motion.aside>
           </>
         )}
       </AnimatePresence>
 
-      {/* -------- MAIN -------- */}
-      <main className="flex-1 flex flex-col min-w-0">
-        {/* Navbar */}
-        <header className="h-20 bg-base-100/80 backdrop-blur-md border-b border-base-300 flex items-center justify-between px-6 sticky top-0 z-40">
+      {/* -------- MAIN CONTENT AREA -------- */}
+      <main className="flex-1 flex flex-col h-full min-w-0 overflow-hidden relative">
+        {/* Header */}
+        <header className="h-20 flex-shrink-0 bg-base-100/80 backdrop-blur-md border-b border-base-300 flex items-center justify-between px-4 sm:px-8 z-20">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsMobileSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-xl bg-base-200 text-base-content hover:bg-base-300 transition-colors"
+              className="md:hidden p-2 rounded-xl bg-base-200 hover:bg-base-300 transition-colors text-base-content"
             >
-              <Menu size={20} />
+              <Menu size={22} />
             </button>
 
-            <h1 className="text-lg font-bold tracking-tight">
-              {currentPath?.label || "Dashboard"}
-            </h1>
+            <div className="flex flex-col">
+                 <h1 className="text-xl font-bold tracking-tight text-base-content">
+                  {currentPath?.label || "Dashboard"}
+                </h1>
+                <span className="text-xs text-base-content/50 hidden sm:block">Welcome back, {user?.displayName?.split(' ')[0]}</span>
+            </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            {/* Theme Toggle Button */}
+          <div className="flex items-center gap-3 sm:gap-4">
             <button
               onClick={toggleTheme}
-              className="p-2.5 rounded-full hover:bg-base-200 transition-all text-base-content/70 hover:text-primary"
-              title="Toggle Theme"
+              className="p-2.5 rounded-full hover:bg-base-200 text-base-content/70 hover:text-primary transition-all"
             >
               {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
             </button>
 
-            {/* Profile */}
+            {/* Profile Dropdown */}
             <div className="relative" ref={profileRef}>
               <div
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className="flex items-center gap-2 cursor-pointer p-1 pr-2 rounded-full hover:bg-base-200 transition-colors border border-transparent hover:border-base-300"
+                className="flex items-center gap-2 cursor-pointer p-1.5 pr-3 rounded-full hover:bg-base-200 border border-transparent hover:border-base-300 transition-all select-none"
               >
                 <img
-                  src={
-                    user?.photoURL ||
-                    `https://ui-avatars.com/api/?name=${user?.displayName}`
-                  }
-                  className="w-9 h-9 rounded-full object-cover ring-2 ring-primary/10"
+                  src={user?.photoURL || `https://ui-avatars.com/api/?name=${user?.displayName}`}
+                  className="w-9 h-9 rounded-full object-cover ring-2 ring-base-300"
                   alt="profile"
                 />
                 <ChevronDown
                   size={14}
-                  className={`transition-transform duration-200 ${
+                  className={`transition-transform duration-200 text-base-content/70 ${
                     isProfileOpen ? "rotate-180" : ""
                   }`}
                 />
@@ -249,26 +283,27 @@ const DashboardLayout = () => {
                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    className="absolute right-0 mt-3 w-60 bg-base-100 border border-base-200 rounded-2xl shadow-xl overflow-hidden z-50"
+                    className="absolute right-0 mt-3 w-64 bg-base-100 border border-base-200 rounded-2xl shadow-xl z-50 overflow-hidden"
                   >
-                    <div className="p-4 border-b border-base-200 bg-base-200/30">
-                      <p className="text-sm font-bold truncate">
-                        {user?.displayName}
+                    <div className="p-4 border-b border-base-200 bg-base-200/50">
+                      <p className="text-sm font-bold truncate text-base-content">
+                        {user?.displayName || "User"}
                       </p>
-                      <p className="text-xs text-base-content/50 truncate">
+                      <p className="text-xs text-base-content/60 truncate font-medium">
                         {user?.email}
                       </p>
                     </div>
-                    <div className="p-2">
+                    <div className="p-2 space-y-1">
                       <Link
                         to="/dashboard/my-profile"
-                        className="flex items-center gap-3 px-3 py-2 text-sm rounded-lg hover:bg-primary/10 hover:text-primary transition-colors"
+                        onClick={() => setIsProfileOpen(false)}
+                        className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg hover:bg-primary/10 hover:text-primary transition-colors text-base-content/80"
                       >
                         <User size={16} /> My Profile
                       </Link>
                       <button
                         onClick={handleLogout}
-                        className="w-full flex items-center gap-3 px-3 py-2 text-sm text-error rounded-lg hover:bg-error/10 transition-colors mt-1"
+                        className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-error rounded-lg hover:bg-error/10 transition-colors"
                       >
                         <LogOut size={16} /> Logout
                       </button>
@@ -280,9 +315,9 @@ const DashboardLayout = () => {
           </div>
         </header>
 
-        {/* Content Area */}
-        <div className="flex-1 overflow-y-auto p-4 lg:p-8 bg-base-200/50">
-          <div className="max-w-6xl mx-auto">
+        {/* Scrollable Content Area */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-base-200/50 relative scroll-smooth">
+          <div className="max-w-7xl mx-auto w-full">
             <Outlet />
           </div>
         </div>
