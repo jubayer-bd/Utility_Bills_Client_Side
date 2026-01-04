@@ -110,7 +110,6 @@ const Navbar = () => {
       path: "/dashboard/my-profile",
       icon: <User size={16} />,
     },
-    { name: "Settings", path: "/settings", icon: <Settings size={16} /> },
   ];
 
   return (
