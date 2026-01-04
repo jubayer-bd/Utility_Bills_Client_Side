@@ -264,7 +264,7 @@ const Navbar = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 400, damping: 40 }}
-              className="fixed top-0 right-0 h-screen w-[300px] bg-base-100 z-[120] shadow-2xl flex flex-col lg:hidden border-l border-base-200"
+              className="fixed top-0 right-0  w-[300px] bg-base-100 z-[120] shadow-2xl flex flex-col lg:hidden border-l border-base-200"
             >
               {/* 1. Header: Stays at the top */}
               <div className="p-6 flex justify-between items-center border-b border-base-200">
@@ -309,8 +309,8 @@ const Navbar = () => {
                 )}
 
                 {/* Navigation Links Group */}
-                <nav className="space-y-2">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-base-content/40 font-bold ml-2 mb-4">
+                <nav className="space-y-2 ">
+                  <p className="text-[10px] uppercase tracking-[0.2em]  text-base-content/40 font-bold ml-2 mb-4">
                     Explore
                   </p>
                   <div className="flex flex-col gap-1">
@@ -382,7 +382,7 @@ const Navbar = () => {
               </div>
 
               {/* 3. Footer: Stays at the bottom */}
-              <div className="p-6 border-t border-base-200 bg-base-100">
+              <div className="p-6 border-t border-base-200 bg-base-100 ">
                 {user ? (
                   <button
                     onClick={handleLogout}
